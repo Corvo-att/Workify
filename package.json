@@ -1,0 +1,19 @@
+{
+  "name": "workify",
+  "version": "1.0.0",
+  "description": "Workify - A marketplace platform for hiring freelancers and finding work. Work. Without Limits.",
+  "main": "index.html",
+  "scripts": {
+    "dev": "echo 'Open index.html in your browser'",
+    "start": "echo 'Open index.html in your browser'"
+  },
+  "keywords": [
+    "freelance",
+    "marketplace",
+    "hiring",
+    "jobs",
+    "talent"
+  ],
+  "author": "Workify Team",
+  "license": "MIT"
+}

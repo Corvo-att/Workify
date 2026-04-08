@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Review Proposals</title>
+    <meta name="description" content="Review and shortlist freelancer proposals for your job postings on Workify." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/freelancer-dashboard.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+      /* ── Proposal page extras ── */
+      .job-selector {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .job-selector label {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+      .job-select-pill {
+        background: var(--bg-surface);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 999px;
+        color: var(--text-primary);
+        font-size: 13px;
+        font-weight: 600;
+        padding: 7px 16px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238B8AA8' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 32px;
+      }
+
+      /* Filter tabs */
+      .filter-tabs {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding-bottom: 0;
+      }
+      .filter-tab {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-muted);
+        padding: 10px 16px;
+        border-bottom: 2px solid transparent;
+        cursor: pointer;
+        transition: color 0.2s, border-color 0.2s;
+        user-select: none;
+      }
+      .filter-tab.active {
+        color: var(--primary-light);
+        border-bottom-color: var(--primary);
+      }
+      .filter-tab:hover { color: var(--text-primary); }
+
+      /* Proposal card */
+      .proposal-card {
+        background: var(--bg-surface);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 14px;
+        padding: 22px;
+        display: grid;
+        grid-template-columns: 52px 1fr auto;
+        gap: 18px;
+        align-items: flex-start;
+        transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+        margin-bottom: 12px;
+      }
+      .proposal-card:hover {
+        border-color: rgba(91,79,233,0.3);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      }
+      .proposal-card.shortlisted {
+        border-color: rgba(34,197,94,0.25);
+        background: rgba(34,197,94,0.03);
+      }
+      .proposal-card.declined {
+        opacity: 0.45;
+        pointer-events: none;
+      }
+
+      .proposal-avatar {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Sora', sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      .proposal-body { min-width: 0; }
+      .proposal-name {
+        font-family: 'Sora', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 2px;
+      }
+      .proposal-headline {
+        font-size: 13px;
+        color: var(--primary-light);
+        margin-bottom: 6px;
+      }
+      .proposal-rating {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        color: var(--amber, #f59e0b);
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .proposal-snippet {
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+      .proposal-meta {
+        display: flex;
+        gap: 12px;
+        font-size: 12px;
+        color: var(--text-muted);
+        flex-wrap: wrap;
+      }
+      .proposal-meta strong {
+        color: var(--text-primary);
+      }
+
+      .proposal-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 120px;
+      }
+      .proposal-bid {
+        font-family: 'Sora', sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--accent);
+        text-align: right;
+        margin-bottom: 8px;
+      }
+      .proposal-bid-type {
+        font-size: 11px;
+        color: var(--text-muted);
+        text-align: right;
+        margin-bottom: 12px;
+      }
+
+      /* Action buttons */
+      .btn-shortlist {
+        background: rgba(34,197,94,0.12);
+        border: 1px solid rgba(34,197,94,0.3);
+        color: #22c55e;
+        border-radius: 8px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        transition: background 0.2s;
+        width: 100%;
+      }
+      .btn-shortlist:hover { background: rgba(34,197,94,0.22); }
+      .btn-message {
+        background: rgba(91,79,233,0.12);
+        border: 1px solid rgba(91,79,233,0.25);
+        color: var(--primary-light);
+        border-radius: 8px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        transition: background 0.2s;
+        width: 100%;
+        text-decoration: none;
+      }
+      .btn-message:hover { background: rgba(91,79,233,0.22); }
+      .btn-hire-sm {
+        border-radius: 8px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        width: 100%;
+        text-decoration: none;
+      }
+      .btn-decline {
+        background: transparent;
+        border: 1px solid rgba(239,68,68,0.25);
+        color: rgba(239,68,68,0.7);
+        border-radius: 8px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        transition: background 0.2s;
+        width: 100%;
+      }
+      .btn-decline:hover { background: rgba(239,68,68,0.08); }
+
+      /* Status badge on card */
+      .proposal-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border-radius: 999px;
+        margin-left: 8px;
+      }
+      .status-shortlisted {
+        background: rgba(34,197,94,0.15);
+        color: #22c55e;
+      }
+      .status-new {
+        background: rgba(91,79,233,0.15);
+        color: var(--primary-light);
+      }
+
+      /* Empty state */
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+      }
+      .empty-state svg {
+        width: 48px; height: 48px;
+        margin: 0 auto 14px;
+        opacity: 0.4;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="sidebar-placeholder" data-component="components/sidebar-client.html"></div>
+
+    <div class="page-wrapper">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <span class="topbar-title">Review Proposals</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Client</div>
+          <div class="icon-btn" title="Notifications">
+            <i data-lucide="bell" style="width:18px;height:18px;"></i>
+          </div>
+          <div class="avatar" style="cursor:pointer;">JD</div>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content">
+        <div class="greeting">
+          <h1 class="greeting-headline">Proposals <span style="font-size:22px;">📋</span></h1>
+          <div class="greeting-date">Review and shortlist freelancers who applied to your jobs.</div>
+        </div>
+
+        <!-- Job selector -->
+        <div class="job-selector">
+          <label for="job-picker">Viewing proposals for:</label>
+          <select class="job-select-pill" id="job-picker">
+            <option>Senior React Developer for Fintech App (12)</option>
+            <option>UX/UI Designer — Dashboard Redesign (28)</option>
+            <option>Technical Writer for API Docs (6)</option>
+          </select>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs">
+          <div class="filter-tab active" onclick="filterProposals(this, 'all')">All (12)</div>
+          <div class="filter-tab" onclick="filterProposals(this, 'shortlisted')">Shortlisted (2)</div>
+          <div class="filter-tab" onclick="filterProposals(this, 'new')">New (8)</div>
+          <div class="filter-tab" onclick="filterProposals(this, 'declined')">Declined (2)</div>
+        </div>
+
+        <!-- Proposal cards -->
+        <div id="proposal-list">
+
+          <!-- Card 1 — Shortlisted -->
+          <div class="proposal-card shortlisted" data-status="shortlisted">
+            <div class="proposal-avatar" style="background:linear-gradient(135deg,#5b4fe9,#a78bfa);">SJ</div>
+            <div class="proposal-body">
+              <div class="proposal-name">
+                Sarah Jenkins
+                <span class="proposal-status-badge status-shortlisted">✓ Shortlisted</span>
+              </div>
+              <div class="proposal-headline">Full-Stack React &amp; Node.js Engineer</div>
+              <div class="proposal-rating">⭐ 4.9 <span style="color:var(--text-muted);font-weight:400;">(87 reviews)</span></div>
+              <div class="proposal-snippet">
+                "I specialize in building scalable fintech applications with React and Node.js. I've delivered secure payment systems for two Series-A stage startups. I can start next Monday and am available full-time…"
+              </div>
+              <div class="proposal-meta">
+                <span><strong>Delivery:</strong> 3 months</span>
+                <span><strong>Jobs Done:</strong> 34</span>
+                <span><strong>Availability:</strong> Full-time</span>
+              </div>
+            </div>
+            <div class="proposal-actions">
+              <div class="proposal-bid">$45<span style="font-size:13px;font-weight:500;">/hr</span></div>
+              <div class="proposal-bid-type">Hourly</div>
+              <a href="hire.html" class="btn-primary btn-hire-sm">
+                <i data-lucide="user-check" style="width:13px;height:13px;"></i> Hire
+              </a>
+              <a href="messages.html" class="btn-message">
+                <i data-lucide="message-square" style="width:13px;height:13px;"></i> Message
+              </a>
+              <button class="btn-decline" onclick="declineProposal(this)">
+                <i data-lucide="x" style="width:13px;height:13px;"></i> Decline
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2 — Shortlisted -->
+          <div class="proposal-card shortlisted" data-status="shortlisted">
+            <div class="proposal-avatar" style="background:linear-gradient(135deg,#f97316,#fb923c);">MA</div>
+            <div class="proposal-body">
+              <div class="proposal-name">
+                Mohamed Adel
+                <span class="proposal-status-badge status-shortlisted">✓ Shortlisted</span>
+              </div>
+              <div class="proposal-headline">React Native &amp; TypeScript Developer</div>
+              <div class="proposal-rating">⭐ 4.8 <span style="color:var(--text-muted);font-weight:400;">(52 reviews)</span></div>
+              <div class="proposal-snippet">
+                "I have 5 years of experience building React and React Native apps for financial and e-commerce clients. My last project involved integrating Stripe into a complex escrow-style payment flow…"
+              </div>
+              <div class="proposal-meta">
+                <span><strong>Delivery:</strong> 10 weeks</span>
+                <span><strong>Jobs Done:</strong> 28</span>
+              </div>
+            </div>
+            <div class="proposal-actions">
+              <div class="proposal-bid">$4,800</div>
+              <div class="proposal-bid-type">Fixed Price</div>
+              <a href="hire.html" class="btn-primary btn-hire-sm">
+                <i data-lucide="user-check" style="width:13px;height:13px;"></i> Hire
+              </a>
+              <a href="messages.html" class="btn-message">
+                <i data-lucide="message-square" style="width:13px;height:13px;"></i> Message
+              </a>
+              <button class="btn-decline" onclick="declineProposal(this)">
+                <i data-lucide="x" style="width:13px;height:13px;"></i> Decline
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3 — New -->
+          <div class="proposal-card" data-status="new">
+            <div class="proposal-avatar" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);">LP</div>
+            <div class="proposal-body">
+              <div class="proposal-name">
+                Lena Park
+                <span class="proposal-status-badge status-new">NEW</span>
+              </div>
+              <div class="proposal-headline">Frontend Engineer — React &amp; Next.js</div>
+              <div class="proposal-rating">⭐ 4.7 <span style="color:var(--text-muted);font-weight:400;">(39 reviews)</span></div>
+              <div class="proposal-snippet">
+                "I'm a frontend specialist with deep expertise in React, Next.js, and Tailwind. I focus on performance-first development and clean, maintainable code. I'd love to discuss the fintech application further…"
+              </div>
+              <div class="proposal-meta">
+                <span><strong>Delivery:</strong> 2.5 months</span>
+                <span><strong>Jobs Done:</strong> 19</span>
+              </div>
+            </div>
+            <div class="proposal-actions">
+              <div class="proposal-bid">$42<span style="font-size:13px;font-weight:500;">/hr</span></div>
+              <div class="proposal-bid-type">Hourly</div>
+              <button class="btn-shortlist" onclick="shortlistProposal(this)">
+                <i data-lucide="bookmark-plus" style="width:13px;height:13px;"></i> Shortlist
+              </button>
+              <a href="messages.html" class="btn-message">
+                <i data-lucide="message-square" style="width:13px;height:13px;"></i> Message
+              </a>
+              <button class="btn-decline" onclick="declineProposal(this)">
+                <i data-lucide="x" style="width:13px;height:13px;"></i> Decline
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 4 — New -->
+          <div class="proposal-card" data-status="new">
+            <div class="proposal-avatar" style="background:linear-gradient(135deg,#8b5cf6,#d946ef);">JO</div>
+            <div class="proposal-body">
+              <div class="proposal-name">
+                James Obi
+                <span class="proposal-status-badge status-new">NEW</span>
+              </div>
+              <div class="proposal-headline">Backend Developer — Node.js &amp; PostgreSQL</div>
+              <div class="proposal-rating">⭐ 4.6 <span style="color:var(--text-muted);font-weight:400;">(21 reviews)</span></div>
+              <div class="proposal-snippet">
+                "My background is in building high-availability APIs for banking and fintech clients. I'm confident in architecting the backend infrastructure your app needs, including auth, transactions, and reporting APIs…"
+              </div>
+              <div class="proposal-meta">
+                <span><strong>Delivery:</strong> 8 weeks</span>
+                <span><strong>Jobs Done:</strong> 14</span>
+              </div>
+            </div>
+            <div class="proposal-actions">
+              <div class="proposal-bid">$3,900</div>
+              <div class="proposal-bid-type">Fixed Price</div>
+              <button class="btn-shortlist" onclick="shortlistProposal(this)">
+                <i data-lucide="bookmark-plus" style="width:13px;height:13px;"></i> Shortlist
+              </button>
+              <a href="messages.html" class="btn-message">
+                <i data-lucide="message-square" style="width:13px;height:13px;"></i> Message
+              </a>
+              <button class="btn-decline" onclick="declineProposal(this)">
+                <i data-lucide="x" style="width:13px;height:13px;"></i> Decline
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 5 — Declined -->
+          <div class="proposal-card declined" data-status="declined">
+            <div class="proposal-avatar" style="background:linear-gradient(135deg,#6b7280,#9ca3af);">MK</div>
+            <div class="proposal-body">
+              <div class="proposal-name">Mia Kovač</div>
+              <div class="proposal-headline">Junior React Developer</div>
+              <div class="proposal-rating">⭐ 3.9 <span style="color:var(--text-muted);font-weight:400;">(8 reviews)</span></div>
+              <div class="proposal-snippet">
+                "I am a junior developer with 1 year of experience in React. I am eager to learn and grow in the fintech space…"
+              </div>
+              <div class="proposal-meta"><span><strong>Delivery:</strong> 4 months</span></div>
+            </div>
+            <div class="proposal-actions">
+              <div class="proposal-bid">$22<span style="font-size:13px;font-weight:500;">/hr</span></div>
+              <div class="proposal-bid-type">Hourly · Declined</div>
+            </div>
+          </div>
+
+        </div><!-- /proposal-list -->
+      </main>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script>
+      lucide.createIcons();
+
+      function filterProposals(tab, status) {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.proposal-card').forEach(card => {
+          card.style.display = (status === 'all' || card.dataset.status === status) ? '' : 'none';
+        });
+      }
+
+      function shortlistProposal(btn) {
+        const card = btn.closest('.proposal-card');
+        card.dataset.status = 'shortlisted';
+        card.classList.add('shortlisted');
+        const nameDiv = card.querySelector('.proposal-name');
+        // Remove old badge if any
+        nameDiv.querySelectorAll('.proposal-status-badge').forEach(b => b.remove());
+        const badge = document.createElement('span');
+        badge.className = 'proposal-status-badge status-shortlisted';
+        badge.textContent = '✓ Shortlisted';
+        nameDiv.appendChild(badge);
+        // Replace shortlist btn with hire btn
+        btn.outerHTML = `<a href="hire.html" class="btn-primary btn-hire-sm" style="border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;width:100%;text-decoration:none;">
+          <i data-lucide="user-check" style="width:13px;height:13px;"></i> Hire
+        </a>`;
+        lucide.createIcons();
+      }
+
+      function declineProposal(btn) {
+        const card = btn.closest('.proposal-card');
+        card.dataset.status = 'declined';
+        card.classList.add('declined');
+        setTimeout(() => card.style.display = 'none', 400);
+      }
+    </script>
+  </body>
+</html>

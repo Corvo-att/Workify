@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Client Dashboard</title>
+    <meta name="description" content="Manage your job postings, review applicants, and track project spending on Workify." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Single self-contained CSS — same as freelancer-dashboard.html -->
+    <link rel="stylesheet" href="../css/freelancer-dashboard.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- ═══ SIDEBAR (loaded by shared.js) ══════════════════════ -->
+    <div id="sidebar-placeholder" data-component="components/sidebar-client.html"></div>
+
+    <!-- ═══ MAIN ════════════════════════════════════════════════ -->
+    <div class="page-wrapper">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <span class="topbar-title">Dashboard</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Client</div>
+          <div class="icon-btn" title="Notifications">
+            <i data-lucide="bell" style="width:18px;height:18px;"></i>
+            <span class="notif-dot"></span>
+          </div>
+          <a href="post-job.html" class="btn-primary" style="font-size:13px;padding:8px 16px;text-decoration:none;display:flex;align-items:center;gap:6px;">
+            <i data-lucide="plus" style="width:15px;height:15px;"></i> Post Job
+          </a>
+          <div class="avatar" style="cursor:pointer;" title="John Doe">JD</div>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content">
+
+        <!-- Greeting -->
+        <div class="greeting">
+          <h1 class="greeting-headline">
+            Good morning, John <span>👋</span>
+          </h1>
+          <div class="greeting-date">Here's what's happening with your projects today.</div>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="stat-grid">
+          <div class="stat-card" style="animation-delay:0.05s;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="stat-label">Total Spend</div>
+              <div class="stat-icon-wrap purple"><i data-lucide="dollar-sign" style="width:18px;height:18px;"></i></div>
+            </div>
+            <div class="stat-value">$12,450</div>
+            <div class="stat-trend"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> +12% this month</div>
+          </div>
+
+          <div class="stat-card" style="animation-delay:0.1s;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="stat-label">Active Jobs</div>
+              <div class="stat-icon-wrap orange"><i data-lucide="briefcase" style="width:18px;height:18px;"></i></div>
+            </div>
+            <div class="stat-value">3</div>
+            <div class="stat-trend neutral"><i data-lucide="minus" style="width:14px;height:14px;"></i> 2 pending review</div>
+          </div>
+
+          <div class="stat-card" style="animation-delay:0.15s;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="stat-label">New Applicants</div>
+              <div class="stat-icon-wrap amber"><i data-lucide="users" style="width:18px;height:18px;"></i></div>
+            </div>
+            <div class="stat-value">18</div>
+            <div class="stat-trend"><i data-lucide="arrow-up-right" style="width:14px;height:14px;"></i> +4 since yesterday</div>
+          </div>
+
+          <div class="stat-card earnings" style="animation-delay:0.2s;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div class="stat-label">Escrow Held</div>
+              <div class="stat-icon-wrap green"><i data-lucide="shield-check" style="width:18px;height:18px;"></i></div>
+            </div>
+            <div class="stat-value">$4,200</div>
+            <div class="stat-trend"><i data-lucide="lock" style="width:14px;height:14px;"></i> Protected by escrow</div>
+          </div>
+        </div>
+
+        <!-- Lower grid: Job Postings + Applicants -->
+        <div class="lower-grid">
+
+          <!-- Active Job Postings -->
+          <div>
+            <div class="section-header">
+              <span class="section-title">Active Job Postings</span>
+              <a href="post-job.html" class="view-all-link">+ Post New</a>
+            </div>
+
+            <div class="job-card">
+              <div class="job-card-top">
+                <div>
+                  <div class="job-title">Senior React Developer for Fintech App</div>
+                  <div class="job-meta">Posted 2 days ago &nbsp;·&nbsp; 12 proposals</div>
+                </div>
+                <span class="job-budget">$4,500</span>
+              </div>
+              <div class="skill-chips">
+                <span class="skill-chip">React</span>
+                <span class="skill-chip">TypeScript</span>
+                <span class="skill-chip">Node.js</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;">
+                <a href="review-proposals.html" class="btn-primary" style="font-size:12px;padding:7px 14px;text-decoration:none;display:flex;align-items:center;gap:5px;">
+                  <i data-lucide="files" style="width:13px;height:13px;"></i> Review Proposals
+                </a>
+                <button class="btn-outline" style="font-size:12px;padding:7px 14px;display:flex;align-items:center;gap:5px;">
+                  <i data-lucide="pencil" style="width:13px;height:13px;"></i> Edit
+                </button>
+              </div>
+            </div>
+
+            <div class="job-card">
+              <div class="job-card-top">
+                <div>
+                  <div class="job-title">UX/UI Designer for Dashboard Redesign</div>
+                  <div class="job-meta">Posted 5 days ago &nbsp;·&nbsp; 28 proposals</div>
+                </div>
+                <span class="job-budget">$2,800</span>
+              </div>
+              <div class="skill-chips">
+                <span class="skill-chip">Figma</span>
+                <span class="skill-chip">UI/UX</span>
+                <span class="skill-chip">Prototyping</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;">
+                <a href="review-proposals.html" class="btn-primary" style="font-size:12px;padding:7px 14px;text-decoration:none;display:flex;align-items:center;gap:5px;">
+                  <i data-lucide="files" style="width:13px;height:13px;"></i> Review Proposals
+                </a>
+                <button class="btn-outline" style="font-size:12px;padding:7px 14px;display:flex;align-items:center;gap:5px;">
+                  <i data-lucide="pencil" style="width:13px;height:13px;"></i> Edit
+                </button>
+              </div>
+            </div>
+
+            <div class="job-card" style="border-color:rgba(139,138,168,0.2);">
+              <div class="job-card-top">
+                <div>
+                  <div class="job-title" style="color:var(--text-muted);">Technical Writer for API Documentation</div>
+                  <div class="job-meta">Draft · Last edited 1 hour ago</div>
+                </div>
+                <span style="font-size:11px;font-weight:600;color:var(--text-muted);background:rgba(139,138,168,0.1);padding:4px 10px;border-radius:999px;">DRAFT</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;">
+                <a href="post-job.html" class="btn-outline" style="font-size:12px;padding:7px 14px;text-decoration:none;display:flex;align-items:center;gap:5px;">
+                  <i data-lucide="edit-3" style="width:13px;height:13px;"></i> Continue Editing
+                </a>
+                <button class="btn-outline" style="font-size:12px;padding:7px 14px;color:var(--danger);border-color:rgba(239,68,68,0.3);display:flex;align-items:center;gap:5px;">
+                  <i data-lucide="trash-2" style="width:13px;height:13px;"></i> Delete
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Applicants -->
+          <div class="activity-panel">
+            <div class="activity-header">Recent Applicants</div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-dot purple"></div>
+                <div class="activity-info">
+                  <div class="activity-text">Sarah Jenkins applied</div>
+                  <div class="activity-sub">Senior React Developer · $45/hr · ⭐ 4.9</div>
+                </div>
+                <div class="activity-time">2h ago</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot orange"></div>
+                <div class="activity-info">
+                  <div class="activity-text">Mariam Mohamed applied</div>
+                  <div class="activity-sub">UX Designer · $380 fixed · ⭐ 4.8</div>
+                </div>
+                <div class="activity-time">3h ago</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot green"></div>
+                <div class="activity-info">
+                  <div class="activity-text">Ahmad Kamal shortlisted</div>
+                  <div class="activity-sub">Frontend Dev · $35/hr · ⭐ 4.7</div>
+                </div>
+                <div class="activity-time">5h ago</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot purple"></div>
+                <div class="activity-info">
+                  <div class="activity-text">Lena Park submitted proposal</div>
+                  <div class="activity-sub">React Developer · $4,200 fixed</div>
+                </div>
+                <div class="activity-time">Yesterday</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot orange"></div>
+                <div class="activity-info">
+                  <div class="activity-text">James Obi applied</div>
+                  <div class="activity-sub">API Documentation · $800 fixed</div>
+                </div>
+                <div class="activity-time">Yesterday</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

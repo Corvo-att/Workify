@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Collaboration Hub</title>
+    <meta name="description" content="Your collaboration and finance hub — messages, contracts, wallet, and disputes." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/collaboration.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder" data-component="components/sidebar-freelancer.html"></div>
+
+    <!-- MAIN -->
+    <div class="page-wrapper">
+      <header class="topbar">
+        <span class="topbar-title">Collaboration Hub</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Freelancer</div>
+          <span class="badge badge-success"><span class="collab-dot"></span> Live</span>
+          <div class="avatar" style="width:36px;height:36px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--bg-elevated);border-radius:50%;">AK</div>
+        </div>
+      </header>
+
+      <main class="content collab-content">
+
+        <!-- Section heading -->
+        <div style="margin-bottom:32px;">
+          <h1 style="font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:800;color:var(--text-primary);margin-bottom:8px;">Collaboration &amp; Finance</h1>
+          <p style="color:var(--text-muted);font-size:var(--fs-base);">These shared pages look similar for both freelancers and clients, but show different data.</p>
+        </div>
+
+        <!-- Quick-link cards -->
+        <div class="grid">
+          <div class="col-3">
+            <a href="messages.html" class="collab-hub-card" id="hub-messages">
+              <div class="collab-hub-icon" aria-hidden="true">
+                <i data-lucide="message-square"></i>
+              </div>
+              <div class="collab-hub-title">Messages</div>
+              <div class="collab-hub-desc">Real-time chat rooms for interviewing and project updates.</div>
+              <span class="badge badge-warning collab-hub-badge"><span class="collab-dot"></span> 2 Active</span>
+            </a>
+          </div>
+
+          <div class="col-3">
+            <a href="contracts.html" class="collab-hub-card" id="hub-contracts">
+              <div class="collab-hub-icon" aria-hidden="true">
+                <i data-lucide="file-text"></i>
+              </div>
+              <div class="collab-hub-title">Contract Management</div>
+              <div class="collab-hub-desc">Source of truth for milestones — Funded, In Review &amp; Released.</div>
+              <span class="badge badge-success collab-hub-badge"><span class="collab-dot"></span> 3 Contracts</span>
+            </a>
+          </div>
+
+          <div class="col-3">
+            <a href="wallet.html" class="collab-hub-card" id="hub-wallet">
+              <div class="collab-hub-icon" aria-hidden="true">
+                <i data-lucide="wallet"></i>
+              </div>
+              <div class="collab-hub-title">Wallet &amp; Transactions</div>
+              <div class="collab-hub-desc">Ledger of deposits, withdrawals, and pending escrow payments.</div>
+              <span class="badge collab-hub-badge"><span class="collab-dot"></span> $1,860 Available</span>
+            </a>
+          </div>
+
+          <div class="col-3">
+            <a href="disputes.html" class="collab-hub-card" id="hub-disputes">
+              <div class="collab-hub-icon collab-hub-icon--danger" aria-hidden="true">
+                <i data-lucide="flag"></i>
+              </div>
+              <div class="collab-hub-title">Dispute Center</div>
+              <div class="collab-hub-desc">Flag a project if work isn't delivered or payment is withheld.</div>
+              <span class="badge badge-warning collab-hub-badge"><span class="collab-dot"></span> 1 Pending</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Summary info row -->
+        <div style="margin-top:40px;" class="grid" style="align-items:start;">
+          <div class="col-8">
+            <div class="collab-card">
+              <div class="collab-card-header">
+                <div class="collab-card-title">
+                  <i data-lucide="sparkles" style="width:20px;height:20px;"></i>
+                  <h2>How These Pages Work</h2>
+                </div>
+              </div>
+              <div class="collab-card-body">
+                <p style="color:var(--text-muted);line-height:1.7;font-size:14px;margin-bottom:16px;">
+                  The four shared pages below serve <strong style="color:var(--text-primary);">both freelancers and clients</strong>.
+                  They share the same UI layout but display role-specific data depending on who is logged in.
+                </p>
+                <div class="collab-kpi-row">
+                  <div class="collab-kpi">
+                    <div class="collab-kpi-label">Design System</div>
+                    <div class="collab-kpi-value" style="font-size:18px;">Sora + Inter</div>
+                    <div class="collab-kpi-sub">Hero headings, labels, mono code</div>
+                  </div>
+                  <div class="collab-kpi collab-kpi--earnings">
+                    <div class="collab-kpi-label">Theme</div>
+                    <div class="collab-kpi-value" style="font-size:18px;">Dark Gradient</div>
+                    <div class="collab-kpi-sub">Primary CTA + earnings wash</div>
+                  </div>
+                  <div class="collab-kpi">
+                    <div class="collab-kpi-label">Layout</div>
+                    <div class="collab-kpi-value" style="font-size:18px;">12-Column</div>
+                    <div class="collab-kpi-sub">Max width 1280, sidebar 260px</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="collab-card collab-card-elevated">
+              <div class="collab-card-header">
+                <div class="collab-card-title">
+                  <i data-lucide="grid-2x2" style="width:20px;height:20px;"></i>
+                  <h2>Quick Links</h2>
+                </div>
+              </div>
+              <div class="collab-card-body" style="display:flex;flex-direction:column;gap:10px;">
+                <a class="btn btn-ghost" href="messages.html">
+                  <i data-lucide="message-square"></i>Messages / Chat
+                </a>
+                <a class="btn btn-ghost" href="contracts.html">
+                  <i data-lucide="file-text"></i>Contract Management
+                </a>
+                <a class="btn btn-ghost" href="wallet.html">
+                  <i data-lucide="wallet"></i>Wallet / Transactions
+                </a>
+                <a class="btn btn-ghost" href="disputes.html">
+                  <i data-lucide="flag"></i>Dispute Center
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script src="../js/collaboration.js"></script>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

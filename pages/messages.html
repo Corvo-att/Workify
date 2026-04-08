@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Messages</title>
+    <meta name="description" content="Real-time messaging between freelancers and clients on Workify." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/collaboration.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder" data-component="components/sidebar-freelancer.html"></div>
+
+    <!-- MAIN -->
+    <div class="page-wrapper">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <span class="topbar-title">Messages</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Freelancer</div>
+          <button class="btn btn-ghost btn-sm" type="button" onclick="alert('Demo UI only')">
+            <i data-lucide="user-plus" style="width:16px;height:16px;"></i>
+            Invite
+          </button>
+          <div class="avatar" style="width:36px;height:36px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--bg-elevated);border-radius:50%;">AK</div>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content collab-content">
+        <div class="collab-chat-layout">
+
+          <!-- Thread List -->
+          <div class="collab-card collab-thread-list">
+            <div class="collab-card-header">
+              <div class="collab-card-title">
+                <i data-lucide="message-square" style="width:20px;height:20px;"></i>
+                <h2>Chat Rooms</h2>
+              </div>
+              <span class="badge badge-warning"><span class="collab-dot"></span> 2 Active</span>
+            </div>
+            <div class="collab-card-body" style="display:flex;flex-direction:column;gap:12px;">
+              <div class="collab-thread" data-thread-id="t1" data-active="true" role="button" tabindex="0">
+                <div class="collab-thread-meta">
+                  <div class="collab-thread-name">Client: Sarah K.</div>
+                  <div class="collab-thread-preview">Latest: Payment milestones…</div>
+                </div>
+                <div class="collab-thread-time">09:41</div>
+              </div>
+              <div class="collab-thread" data-thread-id="t2" data-active="false" role="button" tabindex="0">
+                <div class="collab-thread-meta">
+                  <div class="collab-thread-name">Project: Landing Redesign</div>
+                  <div class="collab-thread-preview">Latest: UI section ready ✅</div>
+                </div>
+                <div class="collab-thread-time">Yesterday</div>
+              </div>
+              <hr class="collab-divider" />
+              <label class="input-label" for="search-rooms" style="margin:0;">Quick action</label>
+              <input id="search-rooms" class="input-field" placeholder="Search conversations…" />
+            </div>
+          </div>
+
+          <!-- Chat Panel -->
+          <div class="collab-card collab-card-elevated collab-chat-panel">
+            <div class="collab-card-header">
+              <div class="collab-card-title">
+                <i data-lucide="sparkles" style="width:20px;height:20px;"></i>
+                <h2>Sarah K. <span style="color:var(--text-muted);font-weight:700;">• Contract #CX-2041</span></h2>
+              </div>
+              <span class="badge badge-success"><span class="collab-dot"></span> Funds Protected</span>
+            </div>
+
+            <div class="collab-chat-messages" data-chat-messages="true" aria-live="polite">
+              <!-- Messages rendered by collaboration.js -->
+            </div>
+
+            <div class="collab-chat-compose">
+              <input class="input-field" data-chat-input placeholder="Write a message…" />
+              <button class="btn btn-primary" data-chat-send type="button">
+                <i data-lucide="send" style="width:16px;height:16px;"></i>
+                Send
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <script>
+      window.PAGE = {
+        chat: {
+          activeThreadId: "t1",
+          threads: {
+            t1: {
+              messages: [
+                { from: "them", text: "Hey! Can you confirm the milestone timeline for the contract?", time: "09:37" },
+                { from: "me",   text: "Yes. I will deliver the first version today and share screenshots after QA.", time: "09:40" },
+                { from: "them", text: "Perfect. Also, please ensure the wallet/transactions page matches the provided theme.", time: "09:41" }
+              ]
+            },
+            t2: {
+              messages: [
+                { from: "me",   text: "I pushed the new hero section and card shimmer styles.", time: "Yesterday" },
+                { from: "them", text: "Looks clean. Can you add the dispute center CTA for flagged projects?", time: "Yesterday" }
+              ]
+            }
+          }
+        }
+      };
+    </script>
+
+    <script src="../js/shared.js"></script>
+    <script src="../js/collaboration.js"></script>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

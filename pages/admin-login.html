@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify Admin Login</title>
+    <meta
+      name="description"
+      content="Secure access to the Workify admin control room."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/admin-dashboard.css" />
+    <script src="../js/admin-auth.js"></script>
+  </head>
+  <body>
+    <main class="admin-login-shell">
+      <aside class="admin-login-aside">
+        <div class="admin-brand admin-login-brand">
+          <div class="admin-brand-mark">W</div>
+          <div class="admin-brand-copy">
+            <div class="admin-brand-name">Workify Admin</div>
+            <div class="admin-brand-subtitle">Internal command access</div>
+          </div>
+        </div>
+
+        <div class="admin-login-center">
+          <div class="admin-login-intro">
+            <div class="admin-kicker">Access required</div>
+            <h1 class="admin-title admin-login-title">
+              A red-line control surface for moderation, finance, and trust.
+            </h1>
+            <p class="admin-subtitle admin-login-subtitle">
+              Sign in with the admin credentials to manage users, review job
+              moderation, and monitor escrow activity from one hardened view.
+            </p>
+          </div>
+
+          <div class="admin-login-rail">
+            <div class="admin-login-rail-header">
+              <span class="admin-status danger">Restricted</span>
+              <span class="admin-pill">Session monitored</span>
+            </div>
+
+            <div class="admin-login-point">
+              <div class="admin-login-point-title">System state</div>
+              <div class="admin-login-point-value">Armed</div>
+              <p class="admin-note">
+                Workspace isolated from client and freelancer journeys.
+              </p>
+            </div>
+
+            <div class="admin-login-point">
+              <div class="admin-login-point-title">Access mode</div>
+              <div class="admin-login-point-value">Verified entry only</div>
+              <p class="admin-note">
+                Credentials are required before the control room loads.
+              </p>
+            </div>
+
+            <div class="admin-login-point">
+              <div class="admin-login-point-title">Control profile</div>
+              <div class="admin-login-point-value">Triage optimized</div>
+              <p class="admin-note">
+                Interface tuned for operational review, not public browsing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="admin-login-panel">
+        <form class="admin-login-card" id="admin-login-form">
+          <div class="admin-kicker">Admin Sign In</div>
+          <h2 class="admin-title admin-login-card-title">
+            Enter control credentials
+          </h2>
+          <p class="admin-note admin-login-credential-note">
+            Username: <strong class="admin-login-credential-value">admin</strong
+            ><br />
+            Password:
+            <strong class="admin-login-credential-value">Workify@2026</strong>
+          </p>
+
+          <div class="admin-login-fields">
+            <label class="admin-field">
+              <span class="admin-label">Username</span>
+              <input
+                class="admin-input"
+                name="username"
+                type="text"
+                autocomplete="username"
+                placeholder="admin"
+              />
+            </label>
+
+            <label class="admin-field">
+              <span class="admin-label">Password</span>
+              <input
+                class="admin-input"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter password"
+              />
+            </label>
+          </div>
+
+          <button class="admin-button admin-login-submit" type="submit">
+            Access Admin Pages
+          </button>
+
+          <div
+            class="admin-alert"
+            id="admin-login-alert"
+            aria-live="polite"
+          ></div>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var form = document.getElementById("admin-login-form");
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          window.adminAuth.handleLogin(form);
+        });
+      });
+    </script>
+  </body>
+</html>

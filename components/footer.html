@@ -1,0 +1,273 @@
+<footer class="wf-footer" style="background-color: var(--bg-surface); border-top: 1px solid rgba(255,255,255,0.06); width: 100%; padding-top: 4rem; padding-bottom: 2rem; margin-top: auto;">
+  <div class="container">
+    
+    <!-- Top Grid Section -->
+    <div class="footer-grid">
+      
+      <!-- Brand Column -->
+      <div class="footer-col brand-col">
+        <div class="footer-logo">
+          <div class="logo-icon">W</div>
+          <span class="logo-text">Workify</span>
+        </div>
+        <p class="footer-desc">
+          Empowering the world's best talent to find the world's best work. Join the future of freelancing today.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-btn" aria-label="Twitter"><i data-lucide="twitter" width="18" height="18"></i></a>
+          <a href="#" class="social-btn" aria-label="GitHub"><i data-lucide="github" width="18" height="18"></i></a>
+          <a href="#" class="social-btn" aria-label="LinkedIn"><i data-lucide="linkedin" width="18" height="18"></i></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><i data-lucide="instagram" width="18" height="18"></i></a>
+        </div>
+      </div>
+
+      <!-- Links Column: For Freelancers -->
+      <div class="footer-col">
+        <h4 class="footer-heading">For Talent</h4>
+        <ul class="footer-nav">
+          <li><a href="#" class="footer-link">Find Work</a></li>
+          <li><a href="#" class="footer-link">My Proposals</a></li>
+          <li><a href="#" class="footer-link">Profile & Stats</a></li>
+          <li><a href="#" class="footer-link">Direct Contracts</a></li>
+        </ul>
+      </div>
+
+      <!-- Links Column: For Clients -->
+      <div class="footer-col">
+        <h4 class="footer-heading">For Clients</h4>
+        <ul class="footer-nav">
+          <li><a href="#" class="footer-link">Post a Job</a></li>
+          <li><a href="#" class="footer-link">Find Talent</a></li>
+          <li><a href="#" class="footer-link">Project Catalog</a></li>
+          <li><a href="#" class="footer-link">Hire an Agency</a></li>
+        </ul>
+      </div>
+
+      <!-- Links Column: Support & Contact -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Support & Contact</h4>
+        <ul class="footer-nav">
+          <li>
+            <a href="#" class="footer-link icon-link">
+              <i data-lucide="help-circle" width="16" height="16"></i> Help Center
+            </a>
+          </li>
+          <li>
+            <a href="#" class="footer-link icon-link">
+              <i data-lucide="messages-square" width="16" height="16"></i> Community Forum
+            </a>
+          </li>
+          <li>
+            <a href="mailto:support@workify.com" class="footer-link icon-link">
+              <i data-lucide="mail" width="16" height="16"></i> support@workify.com
+            </a>
+          </li>
+          <li>
+            <span class="footer-link icon-link" style="cursor: default;">
+              <i data-lucide="map-pin" width="16" height="16"></i> San Francisco, CA
+            </span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; <span id="footer-year">2024</span> Workify Inc.
+      </p>
+      <div class="legal-links">
+        <a href="#" class="legal-link">Terms of Service</a>
+        <a href="#" class="legal-link">Privacy Policy</a>
+        <a href="#" class="legal-link">Cookie Settings</a>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    /* Footer Grid Layout */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      .brand-col {
+        grid-column: span 2;
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+      }
+      .footer-desc {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .brand-col {
+        grid-column: span 1;
+      }
+      .footer-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .icon-link {
+        justify-content: center;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Brand Column */
+    .brand-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-family: sans-serif;
+    }
+    .logo-text {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      font-family: sans-serif;
+    }
+    .footer-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      max-width: 300px;
+    }
+
+    /* Social Icons */
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+    .social-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--primary-light);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Navigation Columns */
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .footer-heading {
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-family: sans-serif;
+    }
+    .footer-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .footer-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+      font-family: sans-serif;
+      display: inline-flex;
+      align-items: center;
+    }
+    .footer-link:hover {
+      color: var(--primary-light);
+    }
+    .icon-link {
+      gap: 0.5rem;
+    }
+
+    /* Bottom Bar */
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .copyright {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+    .legal-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .legal-link {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .legal-link:hover {
+      color: var(--text-primary);
+    }
+  </style>
+
+  <script>
+    if (typeof lucide !== "undefined") {
+      lucide.createIcons();
+    }
+    const yearSpan = document.getElementById("footer-year");
+    if(yearSpan) yearSpan.textContent = new Date().getFullYear();
+  </script>
+</footer>

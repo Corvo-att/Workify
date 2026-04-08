@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Dispute Center</title>
+    <meta name="description" content="Flag a project and submit a dispute when work or payment is withheld on Workify." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/collaboration.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder" data-component="components/sidebar-freelancer.html"></div>
+
+    <!-- MAIN -->
+    <div class="page-wrapper">
+      <header class="topbar">
+        <span class="topbar-title">Dispute Center</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Freelancer</div>
+          <button class="btn btn-ghost btn-sm" type="button" onclick="location.href='contracts.html'">
+            <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+            Contracts
+          </button>
+          <div class="avatar" style="width:36px;height:36px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--bg-elevated);border-radius:50%;">AK</div>
+        </div>
+      </header>
+
+      <main class="content collab-content">
+        <div class="grid" style="align-items:start;">
+
+          <!-- Dispute List -->
+          <div class="col-4">
+            <div class="collab-card">
+              <div class="collab-card-header">
+                <div class="collab-card-title">
+                  <i data-lucide="flag" style="width:20px;height:20px;"></i>
+                  <h2>Disputes</h2>
+                </div>
+                <span class="badge badge-warning"><span class="collab-dot"></span> Review</span>
+              </div>
+              <div class="collab-card-body">
+                <div class="tab-bar collab-tabs" data-tabs>
+                  <button class="tab-item active" aria-selected="true" data-tab="true" data-filter="all">All</button>
+                  <button class="tab-item" aria-selected="false" data-tab="true" data-filter="pending">Pending</button>
+                  <button class="tab-item" aria-selected="false" data-tab="true" data-filter="resolved">Resolved</button>
+                </div>
+
+                <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px;">
+                  <div class="collab-thread" data-filter-item="pending" data-active="false" style="cursor:default;">
+                    <div class="collab-thread-meta">
+                      <div class="collab-thread-name">Hire #CX-2109</div>
+                      <div class="collab-thread-preview">Payment withheld • Evidence attached</div>
+                    </div>
+                    <span class="badge badge-warning"><span class="collab-dot"></span> Pending</span>
+                  </div>
+                  <div class="collab-thread" data-filter-item="resolved" data-active="false" style="cursor:default;">
+                    <div class="collab-thread-meta">
+                      <div class="collab-thread-name">Hire #CX-1912</div>
+                      <div class="collab-thread-preview">Work delayed • Outcome approved</div>
+                    </div>
+                    <span class="badge badge-success"><span class="collab-dot"></span> Resolved</span>
+                  </div>
+                </div>
+
+                <hr class="collab-divider" />
+                <div style="color:var(--text-muted);font-size:13px;line-height:1.6;">
+                  Disputes can pause milestone payouts until the review window completes.
+                  Use clear details to speed up resolution.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dispute Form -->
+          <div class="col-8">
+            <div class="collab-card collab-card-elevated">
+              <div class="collab-card-header">
+                <div class="collab-card-title">
+                  <i data-lucide="message-circle-alert" style="width:20px;height:20px;"></i>
+                  <h2>Flag a Project</h2>
+                </div>
+                <span class="badge"><span class="collab-dot"></span> Secure workflow</span>
+              </div>
+              <div class="collab-card-body">
+                <div style="color:var(--text-muted);line-height:1.6;font-size:13px;">
+                  Submit a dispute when work is not delivered or payment is withheld.
+                  Provide supporting evidence so the contract can be reviewed accurately.
+                </div>
+                <hr class="collab-divider" />
+                <form onsubmit="return false;">
+                  <div class="collab-form-grid">
+                    <div class="collab-span-2">
+                      <label class="input-label" for="dispute-project">Project / Hire</label>
+                      <input id="dispute-project" class="input-field" value="Hire #CX-2109" />
+                    </div>
+                    <div>
+                      <label class="input-label" for="dispute-stage">Payment stage</label>
+                      <select id="dispute-stage" class="input-field">
+                        <option>Funded</option>
+                        <option selected>In Review</option>
+                        <option>Released</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="input-label" for="dispute-type">Reason</label>
+                      <select id="dispute-type" class="input-field">
+                        <option>Work not delivered</option>
+                        <option>Payment withheld</option>
+                        <option>Quality / QA mismatch</option>
+                        <option>Scope disagreement</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="input-label" for="dispute-amount">Amount (optional)</label>
+                      <input id="dispute-amount" class="input-field" placeholder="$0.00" />
+                    </div>
+                    <div class="collab-span-2">
+                      <label class="input-label" for="dispute-evidence">Evidence / Links</label>
+                      <textarea id="dispute-evidence" class="input-field" rows="3" placeholder="Paste URLs, screenshot notes, or delivery timestamps."></textarea>
+                    </div>
+                    <div class="collab-span-2">
+                      <label class="input-label" for="dispute-note">Details</label>
+                      <textarea id="dispute-note" class="input-field" rows="4" placeholder="Explain what happened, what you expected, and what outcome you want."></textarea>
+                    </div>
+                  </div>
+                  <div style="margin-top:16px;display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;">
+                    <button class="btn btn-ghost" type="button" onclick="alert('Demo only: draft saved.')">
+                      <i data-lucide="save" style="width:16px;height:16px;"></i>
+                      Save Draft
+                    </button>
+                    <button class="btn btn-primary" type="button" data-modal-open="#dispute-confirm">
+                      <i data-lucide="send" style="width:16px;height:16px;"></i>
+                      Submit Dispute
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-backdrop" id="dispute-confirm-backdrop" aria-hidden="true">
+      <div id="dispute-confirm" class="modal" role="dialog" aria-modal="true" aria-label="Dispute submitted">
+        <div class="collab-card-header">
+          <div class="collab-card-title">
+            <i data-lucide="shield-alert" style="width:20px;height:20px;"></i>
+            <h2>Dispute Submitted</h2>
+          </div>
+          <button class="btn btn-ghost btn-sm" data-modal-close="#dispute-confirm" type="button" aria-label="Close">
+            <i data-lucide="x" style="width:16px;height:16px;"></i>
+            Close
+          </button>
+        </div>
+        <div class="collab-card-body">
+          <div style="color:var(--text-muted);line-height:1.6;font-size:13px;">
+            Your dispute has been queued for review.
+            In production, the backend will create a dispute record, notify the other party, and pause affected milestone payouts.
+          </div>
+          <hr class="collab-divider" />
+          <div style="display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;">
+            <button class="btn btn-ghost" data-modal-close="#dispute-confirm" type="button">Go Back</button>
+            <button class="btn btn-primary" type="button" onclick="location.href='contracts.html'">
+              <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+              View Contract
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script src="../js/collaboration.js"></script>
+    <script>lucide.createIcons();</script>
+  </body>
+</html>

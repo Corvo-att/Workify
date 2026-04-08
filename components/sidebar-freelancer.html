@@ -1,0 +1,127 @@
+<!-- ============================================================
+     SIDEBAR-FREELANCER.HTML — Freelancer Dashboard Sidebar
+     Uses nav-item classes from freelancer-dashboard.css.
+     Loaded by shared.js into: <div id="sidebar-placeholder"></div>
+     ============================================================ -->
+
+<aside class="sidebar" id="main-sidebar">
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <div class="logo-icon">W</div>
+    <span class="logo-text">Workify</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav" id="sidebar-nav">
+    <div class="nav-section-label">Workspace</div>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/freelancer-dashboard.html"
+      data-page="freelancer-dashboard"
+    >
+      <i data-lucide="layout-dashboard"></i>
+      Dashboard
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/browse-jobs.html"
+      data-page="browse-jobs"
+    >
+      <i data-lucide="briefcase"></i>
+      Browse Jobs
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/submit-proposal.html"
+      data-page="submit-proposal"
+    >
+      <i data-lucide="file-text"></i>
+      Submit Proposal
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/my-proposal.html"
+      data-page="my-proposal"
+    >
+      <i data-lucide="clipboard-list"></i>
+      My Proposals
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/active-contract.html"
+      data-page="active-contract"
+    >
+      <i data-lucide="file-check"></i>
+      Active Contracts
+    </a>
+
+    <div class="nav-section-label">Finance</div>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/wallet.html"
+      data-page="wallet"
+    >
+      <i data-lucide="wallet"></i>
+      Wallet &amp; Earnings
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/contracts.html"
+      data-page="contracts"
+    >
+      <i data-lucide="file-text"></i>
+      Contracts
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/disputes.html"
+      data-page="disputes"
+    >
+      <i data-lucide="flag"></i>
+      Dispute Center
+    </a>
+
+    <div class="nav-section-label">Communication</div>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/messages.html"
+      data-page="messages"
+    >
+      <i data-lucide="message-square"></i>
+      Messages
+      <span class="nav-badge">3</span>
+    </a>
+  </nav>
+
+  <!-- Footer: User + Settings -->
+  <div
+    class="sidebar-footer"
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    "
+  >
+    <div style="display: flex; align-items: center; gap: 10px">
+      <div class="avatar">AK</div>
+      <div class="sidebar-footer-info">
+        <div class="sidebar-footer-name">Alex Karim</div>
+        <div class="sidebar-footer-role">Freelancer</div>
+      </div>
+    </div>
+    <a class="nav-item" href="#" style="border-radius: 8px">
+      <i data-lucide="settings"></i>
+      Settings
+    </a>
+  </div>
+</aside>

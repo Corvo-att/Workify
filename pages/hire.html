@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Send Offer</title>
+    <meta name="description" content="Define contract terms and send a hire offer to a freelancer on Workify." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/freelancer-dashboard.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+      /* ── Hire/Offer page extras ── */
+      .offer-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 24px;
+        align-items: flex-start;
+      }
+      @media (max-width: 820px) {
+        .offer-layout { grid-template-columns: 1fr; }
+      }
+
+      .offer-card {
+        background: var(--bg-surface);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow-card);
+      }
+      .offer-card-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .offer-card-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: rgba(91,79,233,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-light);
+        flex-shrink: 0;
+      }
+      .offer-card-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .offer-card-body {
+        padding: 24px;
+      }
+
+      /* Field styling (same as post-job) */
+      .field { margin-bottom: 20px; }
+      .field-label {
+        display: block;
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+      }
+      .field-hint {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 5px;
+        line-height: 1.5;
+      }
+      .field-input, .field-select {
+        width: 100%;
+        padding: 11px 14px;
+        background: var(--bg-elevated);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        transition: border-color 0.2s;
+        outline: none;
+      }
+      .field-input:focus, .field-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(91,79,233,0.15);
+      }
+      .field-select option { background: var(--bg-surface); }
+
+      /* Radio toggles */
+      .pay-toggles {
+        display: flex;
+        gap: 10px;
+      }
+      .pay-toggle {
+        flex: 1;
+        border: 2px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        padding: 12px 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      .pay-toggle input { display: none; }
+      .pay-toggle.selected {
+        border-color: var(--primary);
+        background: rgba(91,79,233,0.08);
+      }
+      .pay-toggle-title { font-weight: 600; font-size: 13px; color: var(--text-primary); }
+      .pay-toggle-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+      /* Milestones table (escrow breakdown) */
+      .breakdown {
+        background: var(--bg-elevated);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
+      .breakdown-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+      .breakdown-row:last-child { border-bottom: none; }
+      .breakdown-row.total {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-primary);
+        background: rgba(91,79,233,0.06);
+      }
+      .breakdown-row span:last-child { font-weight: 600; color: var(--text-primary); }
+
+      /* Freelancer profile summary (right panel) */
+      .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .profile-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Sora', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .profile-name {
+        font-family: 'Sora', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .profile-title {
+        font-size: 13px;
+        color: var(--primary-light);
+        margin-top: 2px;
+      }
+      .profile-rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 13px;
+        color: #f59e0b;
+        font-weight: 600;
+        margin: 8px 0;
+      }
+      .profile-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 12px 0;
+      }
+      .profile-stat-box {
+        background: var(--bg-elevated);
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+      }
+      .profile-stat-val {
+        font-family: 'Sora', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .profile-stat-lbl {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+
+      /* Escrow note */
+      .escrow-note {
+        background: rgba(34,197,94,0.08);
+        border: 1px solid rgba(34,197,94,0.2);
+        border-radius: 10px;
+        padding: 14px;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 16px;
+      }
+      .escrow-note-icon { color: #22c55e; flex-shrink: 0; margin-top: 1px; }
+      .escrow-note-text { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+      .escrow-note-text strong { color: var(--text-primary); }
+    </style>
+  </head>
+  <body>
+    <div id="sidebar-placeholder" data-component="components/sidebar-client.html"></div>
+
+    <div class="page-wrapper">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <span class="topbar-title">Send Offer</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Client</div>
+          <a href="review-proposals.html" class="icon-btn" title="Back to proposals" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;text-decoration:none;">
+            <i data-lucide="x" style="width:18px;height:18px;color:var(--text-muted);"></i>
+          </a>
+          <div class="avatar" style="cursor:pointer;">JD</div>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content">
+        <div class="greeting">
+          <h1 class="greeting-headline">Hire Sarah Jenkins 🤝</h1>
+          <div class="greeting-date">Define contract terms and deposit the first milestone into escrow to begin the project.</div>
+        </div>
+
+        <div class="offer-layout">
+
+          <!-- LEFT — Offer Form -->
+          <div style="display:flex;flex-direction:column;gap:20px;">
+
+            <!-- Contract Details -->
+            <div class="offer-card">
+              <div class="offer-card-header">
+                <div class="offer-card-icon"><i data-lucide="file-text" style="width:18px;height:18px;"></i></div>
+                <div class="offer-card-title">Contract Details</div>
+              </div>
+              <div class="offer-card-body">
+                <div class="field">
+                  <label class="field-label" for="contract-title">Contract Title</label>
+                  <input id="contract-title" class="field-input" type="text" value="Senior React Developer for Fintech App" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="start-date">Start Date</label>
+                  <input id="start-date" class="field-input" type="date" />
+                </div>
+                <div class="field">
+                  <label class="field-label" for="contract-notes">Private Notes (optional)</label>
+                  <input id="contract-notes" class="field-input" type="text" placeholder="e.g. Focus on payment integration sprint first" />
+                  <div class="field-hint">Only visible to you. Not shared with the freelancer.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Terms -->
+            <div class="offer-card">
+              <div class="offer-card-header">
+                <div class="offer-card-icon"><i data-lucide="credit-card" style="width:18px;height:18px;"></i></div>
+                <div class="offer-card-title">Payment Terms</div>
+              </div>
+              <div class="offer-card-body">
+                <div class="field">
+                  <label class="field-label">Payment Type</label>
+                  <div class="pay-toggles">
+                    <label class="pay-toggle selected" id="pay-hourly" onclick="selectPay('hourly')">
+                      <input type="radio" name="payType" value="hourly" checked />
+                      <i data-lucide="clock" style="width:18px;height:18px;color:var(--primary-light);"></i>
+                      <div>
+                        <div class="pay-toggle-title">Hourly</div>
+                        <div class="pay-toggle-sub">Track time weekly</div>
+                      </div>
+                    </label>
+                    <label class="pay-toggle" id="pay-fixed" onclick="selectPay('fixed')">
+                      <input type="radio" name="payType" value="fixed" />
+                      <i data-lucide="layers" style="width:18px;height:18px;color:var(--primary-light);"></i>
+                      <div>
+                        <div class="pay-toggle-title">Fixed Price</div>
+                        <div class="pay-toggle-sub">Milestone-based</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div id="hourly-fields">
+                  <div class="field">
+                    <label class="field-label" for="rate">Hourly Rate</label>
+                    <input id="rate" class="field-input" type="number" value="45" min="1" oninput="calcBreakdown()" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="hours-week">Weekly Limit</label>
+                    <input id="hours-week" class="field-input" type="number" value="40" min="1" max="60" oninput="calcBreakdown()" />
+                    <div class="field-hint">Maximum billable hours per week.</div>
+                  </div>
+                </div>
+
+                <div id="fixed-fields" style="display:none;">
+                  <div class="field">
+                    <label class="field-label" for="fixed-amount">First Milestone Amount</label>
+                    <input id="fixed-amount" class="field-input" type="number" value="2400" min="1" oninput="calcBreakdown()" />
+                    <div class="field-hint">This amount will be deposited into escrow immediately.</div>
+                  </div>
+                </div>
+
+                <!-- Escrow breakdown -->
+                <div class="breakdown" id="breakdown-box">
+                  <div class="breakdown-row">
+                    <span>Rate</span>
+                    <span id="br-rate">$45.00/hr</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span>Weekly Hours Limit</span>
+                    <span id="br-hours">40 hrs</span>
+                  </div>
+                  <div class="breakdown-row">
+                    <span>Workify Platform Fee (3%)</span>
+                    <span id="br-fee">$54.00/wk</span>
+                  </div>
+                  <div class="breakdown-row total">
+                    <span>Estimated Weekly Total</span>
+                    <span id="br-total">$1,854.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Escrow note -->
+            <div class="escrow-note">
+              <div class="escrow-note-icon">
+                <i data-lucide="shield-check" style="width:18px;height:18px;"></i>
+              </div>
+              <div class="escrow-note-text">
+                <strong>Protected by Workify Escrow</strong><br/>
+                Funds are held securely and only released to the freelancer when you approve their milestone delivery. You can pause or dispute at any time.
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <button class="btn-primary" id="send-offer-btn" onclick="sendOffer()" style="font-size:15px;padding:14px 28px;border-radius:12px;width:100%;justify-content:center;font-weight:700;">
+              <i data-lucide="send" style="width:16px;height:16px;"></i> Send Offer &amp; Fund Escrow
+            </button>
+            <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:4px;">
+              By sending this offer you agree to the <a href="#" style="color:var(--primary-light);">Workify Terms of Service</a>.
+            </p>
+          </div>
+
+          <!-- RIGHT — Freelancer Profile Summary -->
+          <div style="display:flex;flex-direction:column;gap:16px;position:sticky;top:80px;">
+
+            <div class="offer-card">
+              <div class="offer-card-header">
+                <div class="offer-card-icon"><i data-lucide="user" style="width:18px;height:18px;"></i></div>
+                <div class="offer-card-title">Freelancer Profile</div>
+              </div>
+              <div class="offer-card-body">
+                <div class="profile-header">
+                  <div class="profile-avatar">SJ</div>
+                  <div>
+                    <div class="profile-name">Sarah Jenkins</div>
+                    <div class="profile-title">Full-Stack React &amp; Node.js Engineer</div>
+                  </div>
+                </div>
+                <div class="profile-rating">
+                  ⭐ 4.9 <span style="color:var(--text-muted);font-weight:400;">(87 reviews)</span>
+                </div>
+                <div class="profile-stats">
+                  <div class="profile-stat-box">
+                    <div class="profile-stat-val">34</div>
+                    <div class="profile-stat-lbl">Jobs Done</div>
+                  </div>
+                  <div class="profile-stat-box">
+                    <div class="profile-stat-val">100%</div>
+                    <div class="profile-stat-lbl">On-Time Rate</div>
+                  </div>
+                  <div class="profile-stat-box">
+                    <div class="profile-stat-val">$45</div>
+                    <div class="profile-stat-lbl">Hourly Rate</div>
+                  </div>
+                  <div class="profile-stat-box">
+                    <div class="profile-stat-val">5yr</div>
+                    <div class="profile-stat-lbl">Experience</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px;">
+                  <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Top Skills</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                    <span class="skill-chip">React</span>
+                    <span class="skill-chip">Node.js</span>
+                    <span class="skill-chip">TypeScript</span>
+                    <span class="skill-chip">PostgreSQL</span>
+                    <span class="skill-chip">AWS</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="offer-card">
+              <div class="offer-card-header">
+                <div class="offer-card-icon"><i data-lucide="message-square" style="width:18px;height:18px;"></i></div>
+                <div class="offer-card-title">Their Proposal Bid</div>
+              </div>
+              <div class="offer-card-body">
+                <div style="font-family:'Sora',sans-serif;font-size:28px;font-weight:800;color:var(--accent);margin-bottom:4px;">$45<span style="font-size:16px;font-weight:500;">/hr</span></div>
+                <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">
+                  "I specialize in building scalable fintech apps with React and Node.js. I can start next Monday and am available full-time for this project…"
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /offer-layout -->
+      </main>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script>
+      lucide.createIcons();
+
+      // Set today as default start date
+      document.getElementById('start-date').valueAsDate = new Date();
+
+      function selectPay(type) {
+        document.getElementById('pay-hourly').classList.toggle('selected', type === 'hourly');
+        document.getElementById('pay-fixed').classList.toggle('selected', type === 'fixed');
+        document.getElementById('hourly-fields').style.display = type === 'hourly' ? '' : 'none';
+        document.getElementById('fixed-fields').style.display = type === 'fixed'   ? '' : 'none';
+        calcBreakdown();
+      }
+
+      function fmt(n) {
+        return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function calcBreakdown() {
+        const isFixed = document.getElementById('pay-fixed').classList.contains('selected');
+        const box = document.getElementById('breakdown-box');
+
+        if (isFixed) {
+          const amt = parseFloat(document.getElementById('fixed-amount').value) || 0;
+          const fee = amt * 0.03;
+          const total = amt + fee;
+          box.innerHTML = `
+            <div class="breakdown-row"><span>Milestone Amount</span><span>${fmt(amt)}</span></div>
+            <div class="breakdown-row"><span>Workify Platform Fee (3%)</span><span>${fmt(fee)}</span></div>
+            <div class="breakdown-row total"><span>Total Escrowed</span><span>${fmt(total)}</span></div>`;
+        } else {
+          const rate = parseFloat(document.getElementById('rate').value) || 0;
+          const hours = parseFloat(document.getElementById('hours-week').value) || 0;
+          const gross = rate * hours;
+          const fee = gross * 0.03;
+          const total = gross + fee;
+          box.innerHTML = `
+            <div class="breakdown-row"><span>Rate</span><span>${fmt(rate)}/hr</span></div>
+            <div class="breakdown-row"><span>Weekly Hours Limit</span><span>${hours} hrs</span></div>
+            <div class="breakdown-row"><span>Workify Platform Fee (3%)</span><span>${fmt(fee)}/wk</span></div>
+            <div class="breakdown-row total"><span>Estimated Weekly Total</span><span>${fmt(total)}</span></div>`;
+        }
+      }
+
+      function sendOffer() {
+        const btn = document.getElementById('send-offer-btn');
+        btn.textContent = 'Sending offer…';
+        btn.disabled = true;
+        setTimeout(() => {
+          alert('Offer sent successfully! Sarah Jenkins will be notified. Funds are now escrowed.');
+          window.location.href = 'contracts.html';
+        }, 1000);
+      }
+
+      // Init
+      calcBreakdown();
+    </script>
+  </body>
+</html>

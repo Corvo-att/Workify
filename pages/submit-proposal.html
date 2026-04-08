@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Submit Proposal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/submit-proposal.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- ═══ SIDEBAR (loaded by shared.js) ═════════════════════ -->
+    <div
+      id="sidebar-placeholder"
+      data-component="components/sidebar-freelancer.html"
+    ></div>
+
+    <!-- ═══ MAIN ═══════════════════════════════════════════════════ -->
+    <div class="main-wrapper">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <span class="topbar-title">Submit Proposal</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Freelancer</div>
+          <div class="icon-btn">
+            <i data-lucide="bell" style="width: 18px; height: 18px"></i>
+            <span class="notif-dot"></span>
+          </div>
+          <div class="avatar" style="cursor: pointer">AK</div>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content">
+        <div class="page-heading">
+          <h1 class="page-title">Submit a Proposal</h1>
+          <p class="page-subtitle">
+            Applying for:
+            <strong>Senior React Developer – SaaS Dashboard</strong> · TechFlow
+            Inc.
+          </p>
+        </div>
+
+        <div class="proposal-layout">
+          <!-- ── FORM ─────────────────────────────────────────────── -->
+          <div class="form-card">
+            <!-- COVER LETTER -->
+            <div class="form-section">
+              <label class="field-label" for="coverLetter">Cover Letter</label>
+              <textarea
+                class="cover-textarea"
+                id="coverLetter"
+                maxlength="2000"
+                placeholder="Introduce yourself and explain why you're the best fit for this project..."
+                oninput="onCoverInput(this)"
+              ></textarea>
+              <div class="char-count" id="charCount">0 / 2000</div>
+            </div>
+
+            <!-- BID + TIMELINE -->
+            <div class="form-section">
+              <div class="fields-row">
+                <div class="input-group">
+                  <label class="field-label">Your Bid Amount</label>
+                  <div class="input-with-prefix">
+                    <span class="input-prefix">$</span>
+                    <input
+                      class="input-field"
+                      type="number"
+                      id="bidAmount"
+                      placeholder="4500"
+                      min="0"
+                      oninput="updatePreview()"
+                    />
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label class="field-label">Proposed Timeline</label>
+                  <input
+                    class="date-input"
+                    type="date"
+                    id="timeline"
+                    oninput="updatePreview()"
+                  />
+                </div>
+              </div>
+              <div class="budget-hint">
+                <i data-lucide="info"></i>
+                Client's budget: $4,500 fixed
+              </div>
+            </div>
+
+            <!-- MILESTONES -->
+            <div class="form-section">
+              <div class="milestone-header">
+                <span class="milestone-title">Milestone Plan</span>
+                <span class="milestone-hint"
+                  >Break your work into payments</span
+                >
+              </div>
+
+              <div class="milestone-list" id="milestoneList">
+                <div class="milestone-row" data-index="0">
+                  <input
+                    class="milestone-desc"
+                    type="text"
+                    placeholder="e.g. Initial setup & architecture"
+                    oninput="updatePreview()"
+                  />
+                  <div class="milestone-amount">
+                    <span class="prefix">$</span>
+                    <input
+                      type="number"
+                      placeholder="1500"
+                      min="0"
+                      oninput="updatePreview()"
+                    />
+                  </div>
+                </div>
+                <div class="milestone-row" data-index="1">
+                  <input
+                    class="milestone-desc"
+                    type="text"
+                    placeholder="e.g. Core dashboard components"
+                    oninput="updatePreview()"
+                  />
+                  <div class="milestone-amount">
+                    <span class="prefix">$</span>
+                    <input
+                      type="number"
+                      placeholder="2000"
+                      min="0"
+                      oninput="updatePreview()"
+                    />
+                  </div>
+                  <button
+                    class="remove-btn"
+                    onclick="removeMilestone(this)"
+                    title="Remove milestone"
+                  >
+                    <i data-lucide="x"></i>
+                  </button>
+                </div>
+              </div>
+
+              <button class="add-milestone-btn" onclick="addMilestone()">
+                <i data-lucide="plus"></i> Add Milestone
+              </button>
+            </div>
+
+            <!-- FOOTER ACTIONS -->
+            <div class="form-footer">
+              <button class="btn-cancel" onclick="handleCancel()">
+                Cancel
+              </button>
+              <button class="btn-submit" onclick="handleSubmit()">
+                <i data-lucide="send"></i> Submit Proposal
+              </button>
+            </div>
+          </div>
+
+          <!-- ── LIVE PREVIEW ─────────────────────────────────────── -->
+          <div class="preview-panel">
+            <div class="preview-header">
+              <div class="live-dot"></div>
+              <span class="preview-label">Live Preview</span>
+            </div>
+            <div class="preview-body">
+              <div class="preview-row">
+                <span class="preview-key">Applying To</span>
+                <span class="preview-val"
+                  >Senior React Developer – SaaS Dashboard</span
+                >
+              </div>
+
+              <div class="preview-divider"></div>
+
+              <div class="preview-row">
+                <span class="preview-key">Your Bid</span>
+                <span class="preview-val accent" id="previewBid">$—</span>
+              </div>
+
+              <div class="preview-row">
+                <span class="preview-key">Delivery By</span>
+                <span class="preview-val" id="previewDate">Not set</span>
+              </div>
+
+              <div class="preview-divider"></div>
+
+              <div class="preview-row">
+                <span class="preview-key">Cover Letter</span>
+                <div class="preview-cover-text faded" id="previewCover">
+                  Your cover letter will appear here as you type…
+                </div>
+              </div>
+
+              <div class="preview-divider"></div>
+
+              <div class="preview-row">
+                <span class="preview-key">Milestones</span>
+                <div class="preview-milestones" id="previewMilestones">
+                  <div class="preview-milestone-row">
+                    <span class="preview-milestone-name">Milestone 1</span>
+                    <span class="preview-milestone-amt">—</span>
+                  </div>
+                  <div class="preview-milestone-row">
+                    <span class="preview-milestone-name">Milestone 2</span>
+                    <span class="preview-milestone-amt">—</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+      <i data-lucide="check-circle" class="toast-icon"></i>
+      <span class="toast-text"
+        ><strong>Proposal submitted!</strong> TechFlow Inc. will be
+        notified.</span
+      >
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script>
+      lucide.createIcons();
+
+      let milestoneCount = 2;
+
+      /* ── Cover letter char count ─────────────────────────────── */
+      function onCoverInput(el) {
+        const len = el.value.length;
+        const cc = document.getElementById("charCount");
+        cc.textContent = `${len} / 2000`;
+        cc.className =
+          "char-count" +
+          (len > 1800 ? " warn" : "") +
+          (len >= 2000 ? " over" : "");
+        updatePreview();
+      }
+
+      /* ── Update live preview ─────────────────────────────────── */
+      function updatePreview() {
+        // Bid
+        const bid = document.getElementById("bidAmount").value;
+        const previewBid = document.getElementById("previewBid");
+        previewBid.textContent = bid
+          ? `$${Number(bid).toLocaleString()}`
+          : "$—";
+
+        // Date
+        const date = document.getElementById("timeline").value;
+        const previewDate = document.getElementById("previewDate");
+        if (date) {
+          const d = new Date(date + "T00:00:00");
+          previewDate.textContent = d.toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          });
+          previewDate.classList.remove("muted");
+        } else {
+          previewDate.textContent = "Not set";
+        }
+
+        // Cover letter
+        const cover = document.getElementById("coverLetter").value.trim();
+        const previewCover = document.getElementById("previewCover");
+        if (cover) {
+          previewCover.textContent = cover;
+          previewCover.classList.add("faded");
+        } else {
+          previewCover.textContent =
+            "Your cover letter will appear here as you type…";
+          previewCover.classList.add("faded");
+        }
+
+        // Milestones
+        const rows = document.querySelectorAll(".milestone-row");
+        const pmEl = document.getElementById("previewMilestones");
+        pmEl.innerHTML = "";
+
+        rows.forEach((row, idx) => {
+          const descEl = row.querySelector(".milestone-desc");
+          const amtEl = row.querySelector(".milestone-amount input");
+          const desc = descEl ? descEl.value.trim() : "";
+          const amt = amtEl ? amtEl.value.trim() : "";
+
+          const div = document.createElement("div");
+          div.className = "preview-milestone-row";
+          div.innerHTML = `
+        <span class="preview-milestone-name">${desc || "Milestone " + (idx + 1)}</span>
+        <span class="preview-milestone-amt">${amt ? "$" + Number(amt).toLocaleString() : "—"}</span>
+      `;
+          pmEl.appendChild(div);
+        });
+      }
+
+      /* ── Add milestone ───────────────────────────────────────── */
+      function addMilestone() {
+        milestoneCount++;
+        const list = document.getElementById("milestoneList");
+        const row = document.createElement("div");
+        row.className = "milestone-row";
+        row.dataset.index = milestoneCount - 1;
+        row.innerHTML = `
+      <input class="milestone-desc" type="text" placeholder="e.g. New milestone" oninput="updatePreview()" />
+      <div class="milestone-amount">
+        <span class="prefix">$</span>
+        <input type="number" placeholder="0" min="0" oninput="updatePreview()" />
+      </div>
+      <button class="remove-btn" onclick="removeMilestone(this)" title="Remove milestone">
+        <i data-lucide="x"></i>
+      </button>
+    `;
+        list.appendChild(row);
+        lucide.createIcons();
+        updatePreview();
+        row.querySelector(".milestone-desc").focus();
+      }
+
+      /* ── Remove milestone ────────────────────────────────────── */
+      function removeMilestone(btn) {
+        const row = btn.closest(".milestone-row");
+        row.style.opacity = "0";
+        row.style.transform = "translateX(12px)";
+        row.style.transition = "opacity 0.2s, transform 0.2s";
+        setTimeout(() => {
+          row.remove();
+          updatePreview();
+        }, 200);
+      }
+
+      /* ── Cancel ──────────────────────────────────────────────── */
+      function handleCancel() {
+        if (confirm("Discard this proposal?")) {
+          document.getElementById("coverLetter").value = "";
+          document.getElementById("bidAmount").value = "";
+          document.getElementById("timeline").value = "";
+          document
+            .querySelectorAll(".milestone-desc")
+            .forEach((el) => (el.value = ""));
+          document
+            .querySelectorAll(".milestone-amount input")
+            .forEach((el) => (el.value = ""));
+          onCoverInput(document.getElementById("coverLetter"));
+          updatePreview();
+        }
+      }
+
+      /* ── Submit ──────────────────────────────────────────────── */
+      function handleSubmit() {
+        const cover = document.getElementById("coverLetter").value.trim();
+        const bid = document.getElementById("bidAmount").value;
+
+        if (!cover) {
+          document.getElementById("coverLetter").focus();
+          document.getElementById("coverLetter").style.borderColor =
+            "var(--danger)";
+          document.getElementById("coverLetter").style.boxShadow =
+            "0 0 0 3px rgba(239,68,68,0.15)";
+          setTimeout(() => {
+            document.getElementById("coverLetter").style.borderColor = "";
+            document.getElementById("coverLetter").style.boxShadow = "";
+          }, 2000);
+          return;
+        }
+        if (!bid) {
+          document.getElementById("bidAmount").parentElement.style.borderColor =
+            "var(--danger)";
+          setTimeout(() => {
+            document.getElementById(
+              "bidAmount",
+            ).parentElement.style.borderColor = "";
+          }, 2000);
+          return;
+        }
+
+        const toast = document.getElementById("toast");
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 4000);
+      }
+
+      // Init preview
+      updatePreview();
+    </script>
+  </body>
+</html>

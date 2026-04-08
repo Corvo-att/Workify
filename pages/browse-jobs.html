@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browse Jobs — Workify</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/freelancer-dashboard.css" />
+    <link rel="stylesheet" href="../css/browse.css" />
+    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+    <style>
+      .browse-layout {
+        padding-top: 32px;
+      }
+      /* Ensure main-wrapper allows scrolling */
+      .main-wrapper {
+        overflow-x: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ═══ SIDEBAR (loaded by shared.js) ═════════════════════ -->
+    <div
+      id="sidebar-placeholder"
+      data-component="components/sidebar-freelancer.html"
+    ></div>
+
+    <!-- ═══ MAIN WRAPPER ═══════════════════════════════════════════════ -->
+    <div class="main-wrapper">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <span class="topbar-title">Browse Jobs</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Freelancer</div>
+          <div class="icon-btn" title="Notifications">
+            <i data-lucide="bell" style="width: 18px; height: 18px"></i>
+            <span class="notif-dot"></span>
+          </div>
+          <div
+            class="avatar"
+            style="width: 36px; height: 36px; font-size: 13px; cursor: pointer"
+          >
+            AK
+          </div>
+        </div>
+      </header>
+
+      <!-- BROWSE CONTENT -->
+      <div class="browse-layout">
+        <!-- Filter Sidebar -->
+        <aside class="filter-sidebar">
+          <div class="panel-head">
+            <h2>Filters</h2>
+            <p>Refine search results</p>
+          </div>
+
+          <div class="filter-block">
+            <p class="label-caps">Budget Type</p>
+            <div class="toggle-group" id="budgetToggle">
+              <button class="toggle-btn active" data-value="fixed">
+                Fixed Price
+              </button>
+              <button class="toggle-btn" data-value="hourly">Hourly</button>
+            </div>
+          </div>
+
+          <div class="filter-block">
+            <p class="label-caps">Experience Level</p>
+            <div class="chip-group" id="levelGroup">
+              <button class="chip" data-value="entry">Entry</button>
+              <button class="chip" data-value="mid">Intermediate</button>
+              <button class="chip" data-value="expert">Expert</button>
+            </div>
+          </div>
+
+          <div class="filter-block">
+            <p class="label-caps">Category</p>
+            <div class="checkbox-group" id="categoryChecks">
+              <label
+                ><input type="checkbox" value="development" checked />
+                Development</label
+              >
+              <label
+                ><input type="checkbox" value="design" checked /> Design</label
+              >
+              <label
+                ><input type="checkbox" value="writing" checked />
+                Writing</label
+              >
+              <label
+                ><input type="checkbox" value="marketing" checked />
+                Marketing</label
+              >
+              <label
+                ><input type="checkbox" value="data" checked /> Data
+                Science</label
+              >
+              <label
+                ><input type="checkbox" value="video" /> Video &
+                Animation</label
+              >
+            </div>
+          </div>
+
+          <div class="filter-block">
+            <p class="label-caps">Budget Maximum</p>
+            <input
+              type="range"
+              class="range-slider"
+              id="budgetRange"
+              min="100"
+              max="10000"
+              step="100"
+              value="5000"
+            />
+            <div class="range-meta">
+              <span>$100</span>
+              <span id="budgetValue">$5,000+</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="browse-content">
+          <div class="results-head">
+            <h1>Browse Jobs</h1>
+            <p>Explore thousands of job opportunities tailored to you.</p>
+          </div>
+
+          <div class="search-bar">
+            <i data-lucide="search"></i>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search for jobs, skills, or keywords..."
+              id="jobSearch"
+            />
+            <div class="divider-vertical"></div>
+            <select class="search-dropdown" id="searchCategory">
+              <option value="all">All Categories</option>
+              <option value="development">Development</option>
+              <option value="design">Design</option>
+              <option value="writing">Writing</option>
+              <option value="marketing">Marketing</option>
+              <option value="data">Data Science</option>
+              <option value="video">Video & Animation</option>
+            </select>
+          </div>
+
+          <p class="result-count"><span id="jobCount">0</span> jobs found</p>
+
+          <div class="job-grid" id="jobsGrid">
+            <!-- Job Card 1 -->
+            <a
+              href="job-details.html"
+              class="job-card"
+              data-category="development"
+              data-level="expert"
+              data-budget-type="fixed"
+              data-budget="5000"
+            >
+              <div class="card-top">
+                <div class="job-logo"><i data-lucide="code-2"></i></div>
+                <button class="icon-btn"><i data-lucide="heart"></i></button>
+              </div>
+              <div class="job-meta-row">
+                <span class="category-tag">Development</span>
+                <span class="badge badge-expert">Expert</span>
+              </div>
+              <h3 class="card-title">
+                Senior React Developer for Fintech Dashboard
+              </h3>
+              <p class="card-desc">
+                We need a senior developer to lead the frontend architecture of
+                our new analytics dashboard. Must have experience with D3.js and
+                high-volume data visualization.
+              </p>
+              <div class="job-bottom">
+                <span class="budget-badge">$5,000 Fixed</span>
+                <span class="posted-at">2h ago</span>
+              </div>
+            </a>
+
+            <!-- Job Card 2 -->
+            <a
+              href="job-details.html"
+              class="job-card"
+              data-category="design"
+              data-level="mid"
+              data-budget-type="hourly"
+              data-budget="65"
+            >
+              <div class="card-top">
+                <div class="job-logo"><i data-lucide="palette"></i></div>
+                <button class="icon-btn"><i data-lucide="heart"></i></button>
+              </div>
+              <div class="job-meta-row">
+                <span class="category-tag">Design</span>
+                <span class="badge badge-mid">Intermediate</span>
+              </div>
+              <h3 class="card-title">UI/UX Designer for Mobile App</h3>
+              <p class="card-desc">
+                Looking for a creative designer to redesign our iOS application.
+                Focus on clean, minimal interfaces and smooth
+                micro-interactions.
+              </p>
+              <div class="job-bottom">
+                <span class="budget-badge">$65/hr</span>
+                <span class="posted-at">5h ago</span>
+              </div>
+            </a>
+
+            <!-- Job Card 3 -->
+            <a
+              href="job-details.html"
+              class="job-card"
+              data-category="marketing"
+              data-level="entry"
+              data-budget-type="fixed"
+              data-budget="1200"
+            >
+              <div class="card-top">
+                <div class="job-logo"><i data-lucide="megaphone"></i></div>
+                <button class="icon-btn"><i data-lucide="heart"></i></button>
+              </div>
+              <div class="job-meta-row">
+                <span class="category-tag">Marketing</span>
+                <span class="badge badge-default">Entry</span>
+              </div>
+              <h3 class="card-title">Social Media Specialist</h3>
+              <p class="card-desc">
+                Manage our social channels and create engaging content for our
+                growing community of developers.
+              </p>
+              <div class="job-bottom">
+                <span class="budget-badge">$1,200/mo</span>
+                <span class="posted-at">1d ago</span>
+              </div>
+            </a>
+
+            <!-- Job Card 4 -->
+            <a
+              href="job-details.html"
+              class="job-card"
+              data-category="writing"
+              data-level="mid"
+              data-budget-type="fixed"
+              data-budget="800"
+            >
+              <div class="card-top">
+                <div class="job-logo"><i data-lucide="pen-tool"></i></div>
+                <button class="icon-btn"><i data-lucide="heart"></i></button>
+              </div>
+              <div class="job-meta-row">
+                <span class="category-tag">Writing</span>
+                <span class="badge badge-mid">Intermediate</span>
+              </div>
+              <h3 class="card-title">Technical Writer for API Documentation</h3>
+              <p class="card-desc">
+                We need clear, concise documentation for our new public API.
+                Experience with Swagger/OpenAPI is required.
+              </p>
+              <div class="job-bottom">
+                <span class="budget-badge">$800 Fixed</span>
+                <span class="posted-at">1d ago</span>
+              </div>
+            </a>
+
+            <!-- Job Card 5 -->
+            <a
+              href="job-details.html"
+              class="job-card"
+              data-category="data"
+              data-level="expert"
+              data-budget-type="hourly"
+              data-budget="120"
+            >
+              <div class="card-top">
+                <div class="job-logo"><i data-lucide="database"></i></div>
+                <button class="icon-btn"><i data-lucide="heart"></i></button>
+              </div>
+              <div class="job-meta-row">
+                <span class="category-tag">Data Science</span>
+                <span class="badge badge-expert">Expert</span>
+              </div>
+              <h3 class="card-title">Machine Learning Engineer</h3>
+              <p class="card-desc">
+                Help us build and deploy recommendation models for our
+                e-commerce platform using Python and TensorFlow.
+              </p>
+              <div class="job-bottom">
+                <span class="budget-badge">$120/hr</span>
+                <span class="posted-at">2d ago</span>
+              </div>
+            </a>
+
+            <!-- Job Card 6 -->
+            <a
+              href="job-details.html"
+              class="job-card"
+              data-category="development"
+              data-level="mid"
+              data-budget-type="fixed"
+              data-budget="3000"
+            >
+              <div class="card-top">
+                <div class="job-logo"><i data-lucide="smartphone"></i></div>
+                <button class="icon-btn"><i data-lucide="heart"></i></button>
+              </div>
+              <div class="job-meta-row">
+                <span class="category-tag">Development</span>
+                <span class="badge badge-mid">Intermediate</span>
+              </div>
+              <h3 class="card-title">Flutter Developer for MVP</h3>
+              <p class="card-desc">
+                Build a cross-platform MVP for a delivery tracking service.
+                Designs are ready in Figma.
+              </p>
+              <div class="job-bottom">
+                <span class="budget-badge">$3,000 Fixed</span>
+                <span class="posted-at">3d ago</span>
+              </div>
+            </a>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shared.js"></script>
+    <script>
+      lucide.createIcons();
+
+      // Simple Filtering Logic
+      const jobCards = document.querySelectorAll(".job-card");
+      const jobCountSpan = document.getElementById("jobCount");
+
+      function updateCount() {
+        const visible = Array.from(jobCards).filter(
+          (j) => j.style.display !== "none",
+        );
+        if (jobCountSpan) jobCountSpan.textContent = visible.length;
+      }
+
+      // Budget Range
+      const rangeInput = document.getElementById("budgetRange");
+      const valDisplay = document.getElementById("budgetValue");
+      if (rangeInput) {
+        rangeInput.addEventListener("input", (e) => {
+          valDisplay.textContent = `$${parseInt(e.target.value).toLocaleString()}+`;
+        });
+      }
+
+      // Toggle Buttons
+      document.querySelectorAll(".toggle-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const parent = this.parentElement;
+          parent
+            .querySelectorAll(".toggle-btn")
+            .forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+          filterJobs();
+        });
+      });
+
+      // Chip Buttons
+      document.querySelectorAll(".chip").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const parent = this.parentElement;
+          this.classList.toggle("active");
+          filterJobs();
+        });
+      });
+
+      // Filter Logic
+      const searchInputElem = document.getElementById("jobSearch");
+      const categorySelectElem = document.getElementById("searchCategory");
+      const checkboxesElem = document.querySelectorAll("#categoryChecks input");
+
+      function filterJobs() {
+        const query = searchInputElem
+          ? searchInputElem.value.toLowerCase()
+          : "";
+        const selectedCat = categorySelectElem
+          ? categorySelectElem.value
+          : "all";
+        const checkedCats = Array.from(checkboxesElem)
+          .filter((c) => c.checked)
+          .map((c) => c.value);
+
+        // Budget Type
+        const activeBudgetBtn = document.querySelector("#budgetToggle .active");
+        const budgetType = activeBudgetBtn
+          ? activeBudgetBtn.dataset.value
+          : null;
+
+        jobCards.forEach((job) => {
+          const title =
+            job.querySelector(".card-title")?.textContent.toLowerCase() || "";
+          const cat = job.dataset.category;
+          const jobBudgetType = job.dataset.budgetType; // fixed or hourly
+
+          let matchesSearch = title.includes(query);
+          let matchesSelect = selectedCat === "all" || cat === selectedCat;
+          let matchesCheck = checkedCats.includes(cat);
+          let matchesBudget = !budgetType || jobBudgetType === budgetType;
+
+          if (matchesSearch && matchesSelect && matchesCheck && matchesBudget) {
+            job.style.display = "flex";
+          } else {
+            job.style.display = "none";
+          }
+        });
+        updateCount();
+      }
+
+      if (searchInputElem)
+        searchInputElem.addEventListener("input", filterJobs);
+      if (categorySelectElem)
+        categorySelectElem.addEventListener("change", filterJobs);
+      checkboxesElem.forEach((c) => c.addEventListener("change", filterJobs));
+
+      // Initial run
+      updateCount();
+    </script>
+  </body>
+</html>

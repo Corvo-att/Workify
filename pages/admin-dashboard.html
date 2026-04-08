@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify Admin Control Room</title>
+    <meta
+      name="description"
+      content="Admin workspace for user moderation, job review, and financial oversight."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/admin-dashboard.css" />
+    <script src="../js/admin-auth.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+
+  <body>
+    <main class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand">
+          <div class="admin-brand-mark">W</div>
+          <div class="admin-brand-copy">
+            <div class="admin-brand-name">Workify Admin</div>
+            <div class="admin-brand-subtitle">Control room</div>
+          </div>
+        </div>
+
+        <nav class="admin-nav" aria-label="Admin sections">
+          <div class="admin-nav-label">Overview</div>
+          <a class="admin-nav-item active" href="#" data-admin-tab="overview">
+            <i data-lucide="layout-dashboard"></i>
+            Dashboard
+          </a>
+          <a class="admin-nav-item" href="#" data-admin-tab="users">
+            <i data-lucide="users"></i>
+            Users
+          </a>
+          <a class="admin-nav-item" href="#" data-admin-tab="moderation">
+            <i data-lucide="shield-alert"></i>
+            Job Moderation
+          </a>
+          <a class="admin-nav-item" href="#" data-admin-tab="finance">
+            <i data-lucide="banknote"></i>
+            Finance
+          </a>
+          <a class="admin-nav-item" href="#" data-admin-tab="activity">
+            <i data-lucide="scroll-text"></i>
+            Activity Log
+          </a>
+        </nav>
+
+        <div class="admin-footer">
+          <div class="admin-user-card">
+            <div class="admin-avatar">AD</div>
+            <div class="admin-user-copy">
+              <div class="admin-user-name">Admin Desk</div>
+              <div class="admin-user-role">Platform owner</div>
+            </div>
+          </div>
+          <button
+            class="admin-logout secondary"
+            type="button"
+            id="admin-logout"
+          >
+            <i data-lucide="log-out"></i>
+            Log out
+          </button>
+          <a class="admin-auth-link" href="#">
+            <i data-lucide="settings-2"></i>
+            Settings
+          </a>
+        </div>
+      </aside>
+
+      <section class="admin-content">
+        <header class="admin-topbar">
+          <div class="admin-topbar-title">
+            <div class="admin-kicker">Internal control</div>
+            <h1 class="admin-title">Admin dashboard</h1>
+            <p class="admin-subtitle">
+              Monitor trust signals, review risky jobs, and keep platform
+              finance within bounds.
+            </p>
+            <div class="admin-topbar-meta">
+              <span class="admin-pill">Access tier: Admin</span>
+              <span class="admin-pill">Mode: Red-line monitoring</span>
+              <span class="admin-pill">Last sync: live</span>
+            </div>
+          </div>
+
+          <div class="admin-toolbar">
+            <input
+              class="admin-search"
+              id="admin-search"
+              type="search"
+              placeholder="Search users, jobs, or notes"
+            />
+            <button
+              class="admin-button secondary"
+              type="button"
+              id="admin-refresh"
+            >
+              <i data-lucide="refresh-cw"></i>
+              Refresh
+            </button>
+          </div>
+        </header>
+
+        <section class="admin-grid stats" aria-label="Admin metrics">
+          <article class="admin-stat">
+            <div class="admin-stat-label">Total Escrow Held</div>
+            <h2 class="admin-stat-value" id="escrowTotal">$0</h2>
+            <div class="admin-stat-trend">+8.2% vs last week</div>
+          </article>
+          <article class="admin-stat">
+            <div class="admin-stat-label">Fees Collected MTD</div>
+            <h2 class="admin-stat-value" id="feesTotal">$0</h2>
+            <div class="admin-stat-trend">Revenue up from active hires</div>
+          </article>
+          <article class="admin-stat">
+            <div class="admin-stat-label">Pending Withdrawals</div>
+            <h2 class="admin-stat-value" id="pendingTotal">$0</h2>
+            <div class="admin-stat-trend">Needs review before release</div>
+          </article>
+          <article class="admin-stat">
+            <div class="admin-stat-label">Open Risk Flags</div>
+            <h2 class="admin-stat-value" id="riskFlags">0</h2>
+            <div class="admin-stat-trend">Moderation queue priority</div>
+          </article>
+        </section>
+
+        <section class="admin-grid main" style="margin-top: 10px">
+          <article
+            class="admin-card admin-card--hero"
+            data-admin-panel="overview"
+          >
+            <div class="admin-card-header">
+              <div class="admin-card-title">
+                <i data-lucide="shield-check"></i>
+                Overview
+              </div>
+              <span class="admin-status danger">Admin only</span>
+            </div>
+            <div class="admin-card-body">
+              <div class="admin-section-grid">
+                <div
+                  class="admin-card"
+                  style="
+                    box-shadow: none;
+                    background: rgba(255, 255, 255, 0.02);
+                  "
+                >
+                  <div class="admin-card-header">
+                    <div class="admin-card-title">
+                      <i data-lucide="activity"></i>
+                      System pulse
+                    </div>
+                    <span class="admin-status success">Stable</span>
+                  </div>
+                  <div class="admin-card-body">
+                    <svg
+                      class="admin-mini-chart"
+                      id="financeChart"
+                      viewBox="0 0 360 180"
+                      aria-label="Escrow and fee trend chart"
+                    ></svg>
+                  </div>
+                </div>
+
+                <div
+                  class="admin-card"
+                  style="
+                    box-shadow: none;
+                    background: rgba(255, 255, 255, 0.02);
+                  "
+                >
+                  <div class="admin-card-header">
+                    <div class="admin-card-title">
+                      <i data-lucide="sparkles"></i>
+                      Watchlist
+                    </div>
+                    <span class="admin-status warning">3 queued</span>
+                  </div>
+                  <div class="admin-card-body">
+                    <div class="admin-list" id="watchlist"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section
+          class="admin-card"
+          data-admin-panel="users"
+          style="margin-top: 12px; display: none"
+        >
+          <div class="admin-card-header">
+            <div class="admin-card-title">
+              <i data-lucide="users"></i>
+              User Management
+            </div>
+            <div class="admin-pill-row">
+              <span class="admin-status neutral">Searchable</span>
+              <span class="admin-status warning">Verification pending</span>
+            </div>
+          </div>
+          <div class="admin-card-body">
+            <table class="admin-table" id="usersTable">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Last Seen</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section
+          class="admin-card"
+          data-admin-panel="moderation"
+          style="margin-top: 12px; display: none"
+        >
+          <div class="admin-card-header">
+            <div class="admin-card-title">
+              <i data-lucide="shield-alert"></i>
+              Job Moderation Queue
+            </div>
+            <span class="admin-status danger">Flagged content</span>
+          </div>
+          <div class="admin-card-body">
+            <div class="admin-list" id="jobsQueue"></div>
+          </div>
+        </section>
+
+        <section
+          class="admin-card"
+          data-admin-panel="finance"
+          style="margin-top: 12px; display: none"
+        >
+          <div class="admin-card-header">
+            <div class="admin-card-title">
+              <i data-lucide="banknote"></i>
+              Financial Overview
+            </div>
+            <span class="admin-status success">MTD summary</span>
+          </div>
+          <div class="admin-card-body">
+            <table class="admin-table" id="financeTable">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Value</th>
+                  <th>State</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section
+          class="admin-card"
+          data-admin-panel="activity"
+          style="margin-top: 12px; display: none"
+        >
+          <div class="admin-card-header">
+            <div class="admin-card-title">
+              <i data-lucide="scroll-text"></i>
+              Activity Log
+            </div>
+            <span class="admin-status neutral">Audit trail</span>
+          </div>
+          <div class="admin-card-body">
+            <div class="admin-log" id="activityLog"></div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="../js/admin-dashboard.js"></script>
+  </body>
+</html>

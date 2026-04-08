@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How It Works — Workify</title>
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/how-it-works.css" />
+    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+
+    <main class="how-it-works">
+      <div class="how-header reveal">
+        <p class="eyebrow">Simple Workflow</p>
+        <h1>How Workify Works</h1>
+        <p>
+          Pick your role and follow a clear three-step path from matching to
+          successful delivery.
+        </p>
+        <div class="path-tabs">
+          <button
+            class="path-tab active"
+            data-path="client"
+            aria-pressed="true"
+            type="button"
+          >
+            I am a Client
+          </button>
+          <button
+            class="path-tab"
+            data-path="freelancer"
+            aria-pressed="false"
+            type="button"
+          >
+            I am a Freelancer
+          </button>
+        </div>
+      </div>
+
+      <section class="path-content active" id="client-path">
+        <header class="flow-head reveal">
+          <h2>Post - Hire - Pay</h2>
+          <p>
+            For clients who want fast hiring with transparent delivery control.
+          </p>
+        </header>
+        <div class="step-flow">
+          <article class="step-card card reveal">
+            <span class="step-number gradient-text">1</span>
+            <div class="step-icon">
+              <i data-lucide="file-text"></i>
+            </div>
+            <h3>Post</h3>
+            <p>
+              Define title, skills, budget type, and timeline. Workify guides
+              your brief so freelancers understand scope immediately.
+            </p>
+          </article>
+          <div class="step-connector" aria-hidden="true"></div>
+          <article class="step-card card reveal">
+            <span class="step-number gradient-text">2</span>
+            <div class="step-icon">
+              <i data-lucide="users"></i>
+            </div>
+            <h3>Hire</h3>
+            <p>
+              Compare proposals, shortlist top candidates, and finalize terms in
+              one workspace before starting the contract.
+            </p>
+          </article>
+          <div class="step-connector" aria-hidden="true"></div>
+          <article class="step-card card reveal">
+            <span class="step-number gradient-text">3</span>
+            <div class="step-icon">
+              <i data-lucide="wallet"></i>
+            </div>
+            <h3>Pay</h3>
+            <p>
+              Deposit milestones into escrow and release payment only after
+              approved deliverables. Every transaction stays trackable.
+            </p>
+          </article>
+        </div>
+        <div class="path-cta">
+          <a href="browse-talent.html" class="btn-primary btn-large">
+            Start Hiring
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </section>
+
+      <section class="path-content" id="freelancer-path">
+        <header class="flow-head reveal">
+          <h2>Bid - Work - Get Paid</h2>
+          <p>
+            For freelancers building consistent income with trusted clients.
+          </p>
+        </header>
+        <div class="step-flow">
+          <article class="step-card card reveal">
+            <span class="step-number gradient-text">1</span>
+            <div class="step-icon">
+              <i data-lucide="pen-tool"></i>
+            </div>
+            <h3>Bid</h3>
+            <p>
+              Send targeted proposals with your cover letter, bid amount, and
+              milestones that show clear delivery thinking.
+            </p>
+          </article>
+          <div class="step-connector" aria-hidden="true"></div>
+          <article class="step-card card reveal">
+            <span class="step-number gradient-text">2</span>
+            <div class="step-icon">
+              <i data-lucide="briefcase"></i>
+            </div>
+            <h3>Work</h3>
+            <p>
+              Collaborate in one thread for files, chats, and revisions while
+              delivering milestones on agreed timelines.
+            </p>
+          </article>
+          <div class="step-connector" aria-hidden="true"></div>
+          <article class="step-card card reveal">
+            <span class="step-number gradient-text">3</span>
+            <div class="step-icon">
+              <i data-lucide="dollar-sign"></i>
+            </div>
+            <h3>Get Paid</h3>
+            <p>
+              Receive milestone releases securely and withdraw earnings from
+              your wallet whenever you are ready.
+            </p>
+          </article>
+        </div>
+        <div class="path-cta">
+          <a href="browse-jobs.html" class="btn-primary btn-large">
+            Find Projects
+            <i data-lucide="arrow-right"></i>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/shared.js"></script>
+    <script>
+      lucide.createIcons();
+
+      const tabs = document.querySelectorAll(".path-tab");
+      const contents = document.querySelectorAll(".path-content");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((item) => {
+            item.classList.remove("active");
+            item.setAttribute("aria-pressed", "false");
+          });
+          contents.forEach((item) => item.classList.remove("active"));
+
+          tab.classList.add("active");
+          tab.setAttribute("aria-pressed", "true");
+          document
+            .getElementById(`${tab.dataset.path}-path`)
+            .classList.add("active");
+        });
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("revealed");
+          });
+        },
+        { threshold: 0.2 },
+      );
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
+    </script>
+    <script defer src="../js/shared.js"></script>
+  </body>
+</html>

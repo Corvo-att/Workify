@@ -1,0 +1,121 @@
+<!-- ============================================================
+     SIDEBAR-CLIENT.HTML — Client Dashboard Sidebar
+     Uses nav-item classes from freelancer-dashboard.css.
+     Loaded by shared.js into: <div id="sidebar-placeholder"></div>
+     ============================================================ -->
+
+<aside class="sidebar" id="main-sidebar">
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <div class="logo-icon">W</div>
+    <span class="logo-text">Workify</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav" id="sidebar-nav">
+    <div class="nav-section-label">Workspace</div>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/client-dashboard.html"
+      data-page="client-dashboard"
+    >
+      <i data-lucide="layout-dashboard"></i>
+      Dashboard
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/post-job.html"
+      data-page="post-job"
+    >
+      <i data-lucide="plus-circle"></i>
+      Post a Job
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/browse-talent.html"
+      data-page="browse-talent"
+    >
+      <i data-lucide="users"></i>
+      Browse Talent
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/review-proposals.html"
+      data-page="review-proposals"
+    >
+      <i data-lucide="files"></i>
+      Review Proposals
+    </a>
+    <a class="nav-item" href="#" data-route="pages/hire.html" data-page="hire">
+      <i data-lucide="user-check"></i>
+      Hire / Send Offer
+    </a>
+
+    <div class="nav-section-label">Finance</div>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/client-wallet.html"
+      data-page="client-wallet"
+    >
+      <i data-lucide="wallet"></i>
+      Financial Overview
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/client-disputes.html"
+      data-page="client-disputes"
+    >
+      <i data-lucide="flag"></i>
+      Dispute Center
+    </a>
+
+    <div class="nav-section-label">Communication</div>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/client-messages.html"
+      data-page="client-messages"
+    >
+      <i data-lucide="message-square"></i>
+      Messages
+    </a>
+    <a
+      class="nav-item"
+      href="#"
+      data-route="pages/client-contracts.html"
+      data-page="client-contracts"
+    >
+      <i data-lucide="file-text"></i>
+      Contracts
+    </a>
+  </nav>
+
+  <!-- Footer: User + Settings -->
+  <div
+    class="sidebar-footer"
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    "
+  >
+    <div style="display: flex; align-items: center; gap: 10px">
+      <div class="avatar">JD</div>
+      <div class="sidebar-footer-info">
+        <div class="sidebar-footer-name">John Doe</div>
+        <div class="sidebar-footer-role">Client Account</div>
+      </div>
+    </div>
+    <a class="nav-item" href="#" style="border-radius: 8px">
+      <i data-lucide="settings"></i>
+      Settings
+    </a>
+  </div>
+</aside>

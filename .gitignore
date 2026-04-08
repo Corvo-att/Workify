@@ -1,0 +1,42 @@
+# ===========================================
+# Workify .gitignore
+# Things we DON'T want pushed to GitHub
+# ===========================================
+
+# --- OS junk files ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+
+# --- Editor / IDE folders ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Node (in case anyone adds packages later) ---
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# --- Build output (if we add a build step later) ---
+dist/
+build/
+.cache/
+
+# --- Environment / secrets ---
+.env
+.env.local
+.env.production
+
+# --- Misc ---
+*.log
+*.tmp
+*.bak
+
+# --- Vercel ---
+.vercel/
+.vercelignore

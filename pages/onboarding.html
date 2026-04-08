@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Get Started</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/onboarding.css" />
+    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+    <style>
+      /* Quick Override for Demo Purposes */
+      .fade-in {
+        animation: fadeIn 0.4s ease-in forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="onboarding-header">
+      <a href="../index.html" class="logo-wrap">
+        <div class="logo-icon">W</div>
+        <span class="logo-text">Workify</span>
+      </a>
+      <div class="user-snippet">
+        <span style="font-size: 0.9rem; color: var(--text-muted)"
+          >Logged in as Alex</span
+        >
+        <div class="user-avatar">AK</div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="onboarding-main">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+
+      <!-- STEP 1: ROLE SELECTION -->
+      <section id="step-role" class="onboarding-container">
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-eyebrow">Step 1 of 3</span>
+            <h1 class="step-title">How do you want to use Workify?</h1>
+            <p class="step-desc">
+              Choose your primary goal. You can always add the other role later.
+            </p>
+          </div>
+
+          <div class="role-grid">
+            <!-- Client Card -->
+            <div class="role-card" onclick="selectRole('client')">
+              <div class="role-icon">
+                <i data-lucide="building-2"></i>
+              </div>
+              <h3>I want to hire talent</h3>
+              <p>
+                Find vetted freelancers, post jobs, and manage your projects
+                with ease.
+              </p>
+            </div>
+
+            <!-- Freelancer Card -->
+            <div class="role-card" onclick="selectRole('freelancer')">
+              <div class="role-icon">
+                <i data-lucide="briefcase"></i>
+              </div>
+              <h3>I want to find work</h3>
+              <p>
+                Create a profile, send proposals, and get paid securely for your
+                skills.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2: FREELANCER SETUP (WIZARD) -->
+      <section id="step-freelancer" class="onboarding-container hidden">
+        <div class="step-card">
+          <!-- Wizard Progress -->
+          <div class="progress-bar">
+            <div class="progress-dot active" id="dot-1"></div>
+            <div class="progress-dot" id="dot-2"></div>
+            <div class="progress-dot" id="dot-3"></div>
+          </div>
+
+          <div class="step-header">
+            <span class="step-eyebrow">Freelancer Profile</span>
+            <h1 class="step-title">Showcase your expertise</h1>
+            <p class="step-desc">
+              Clients look for detailed profiles. Let's make yours stand out.
+            </p>
+          </div>
+
+          <!-- Wizard Screen 1: Basics -->
+          <div id="wiz-screen-1" class="wizard-screen">
+            <form id="freelancer-form-1">
+              <div class="form-group">
+                <label class="form-label">Professional Headline</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="e.g. Senior Product Designer | UI/UX"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Bio / Summary</label>
+                <textarea
+                  class="form-textarea"
+                  rows="4"
+                  placeholder="Tell clients about your experience..."
+                  required
+                ></textarea>
+              </div>
+              <div class="btn-row">
+                <button
+                  type="button"
+                  class="btn-back"
+                  onclick="selectRole(null)"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn-next"
+                  onclick="nextWizardStep(2)"
+                >
+                  Next <i data-lucide="arrow-right" w="16"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Wizard Screen 2: Skills & Rate -->
+          <div id="wiz-screen-2" class="wizard-screen hidden">
+            <form id="freelancer-form-2">
+              <div class="form-group">
+                <label class="form-label">Top Skills (Comma separated)</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  placeholder="React, Python, Copywriting..."
+                  required
+                />
+              </div>
+              <div
+                class="form-group"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+              >
+                <div>
+                  <label class="form-label">Hourly Rate ($)</label>
+                  <input
+                    type="number"
+                    class="form-input"
+                    placeholder="0.00"
+                    min="5"
+                    required
+                  />
+                </div>
+                <div>
+                  <label class="form-label">Experience Level</label>
+                  <select class="form-select">
+                    <option>Entry Level</option>
+                    <option>Intermediate</option>
+                    <option>Expert</option>
+                  </select>
+                </div>
+              </div>
+              <div class="btn-row">
+                <button
+                  type="button"
+                  class="btn-back"
+                  onclick="nextWizardStep(1)"
+                >
+                  Back
+                </button>
+                <button
+                  type="button"
+                  class="btn-next"
+                  onclick="nextWizardStep(3)"
+                >
+                  Next <i data-lucide="arrow-right" w="16"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Wizard Screen 3: Portfolio -->
+          <div id="wiz-screen-3" class="wizard-screen hidden">
+            <div class="form-group">
+              <label class="form-label">Portfolio Link</label>
+              <input
+                type="url"
+                class="form-input"
+                placeholder="https://dribbble.com/yourname"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">LinkedIn Profile</label>
+              <input
+                type="url"
+                class="form-input"
+                placeholder="https://linkedin.com/in/yourname"
+              />
+            </div>
+            <div class="btn-row">
+              <button
+                type="button"
+                class="btn-back"
+                onclick="nextWizardStep(2)"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                class="btn-next"
+                onclick="finishOnboarding('freelancer')"
+              >
+                Complete Profile <i data-lucide="check" w="16"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3: CLIENT SETUP (Single Page) -->
+      <section id="step-client" class="onboarding-container hidden">
+        <div class="step-card">
+          <div class="step-header">
+            <span class="step-eyebrow">Client Profile</span>
+            <h1 class="step-title">Set up your company</h1>
+            <p class="step-desc">
+              Help freelancers understand who they're working with.
+            </p>
+          </div>
+
+          <form
+            id="client-form"
+            onsubmit="
+              event.preventDefault();
+              finishOnboarding('client');
+            "
+          >
+            <div class="form-group">
+              <label class="form-label">Company Name</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="Acme Inc."
+                required
+              />
+            </div>
+
+            <div
+              class="form-group"
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+            >
+              <div>
+                <label class="form-label">Industry</label>
+                <select class="form-select">
+                  <option>Software & Tech</option>
+                  <option>Marketing</option>
+                  <option>Finance</option>
+                  <option>Education</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Company Size</label>
+                <select class="form-select">
+                  <option>1-10 employees</option>
+                  <option>11-50 employees</option>
+                  <option>50+ employees</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Payment Method</label>
+              <select class="form-select">
+                <option>Credit Card (Stripe)</option>
+                <option>PayPal</option>
+                <option>Bank Transfer</option>
+              </select>
+            </div>
+
+            <div class="btn-row">
+              <button type="button" class="btn-back" onclick="selectRole(null)">
+                Back
+              </button>
+              <button type="submit" class="btn-next">
+                Create Workspace <i data-lucide="rocket" w="16"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Init Icons
+      lucide.createIcons();
+
+      // Simple Router Logic
+      function selectRole(role) {
+        // Reset everything first
+        document.getElementById("step-role").classList.add("hidden");
+        document.getElementById("step-freelancer").classList.add("hidden");
+        document.getElementById("step-client").classList.add("hidden");
+
+        if (!role) {
+          // Go back to role selection
+          document.getElementById("step-role").classList.remove("hidden");
+          return;
+        }
+
+        if (role === "freelancer") {
+          document.getElementById("step-freelancer").classList.remove("hidden");
+        } else if (role === "client") {
+          document.getElementById("step-client").classList.remove("hidden");
+        }
+      }
+
+      function nextWizardStep(stepNumber) {
+        // Hide all screens
+        document.getElementById("wiz-screen-1").classList.add("hidden");
+        document.getElementById("wiz-screen-2").classList.add("hidden");
+        document.getElementById("wiz-screen-3").classList.add("hidden");
+
+        // Show target
+        document
+          .getElementById("wiz-screen-" + stepNumber)
+          .classList.remove("hidden");
+
+        // Update dots
+        document.querySelectorAll(".progress-dot").forEach((dot, idx) => {
+          if (idx < stepNumber) dot.classList.add("active");
+          else dot.classList.remove("active");
+        });
+      }
+
+      function finishOnboarding(role) {
+        let btn = null;
+        // Check if triggered by form submission or button click
+        if (event && event.type === "submit") {
+          btn = event.target.querySelector('button[type="submit"]');
+        } else if (event && event.target) {
+          btn = event.target.closest("button");
+        }
+
+        if (btn) {
+          btn.innerHTML = "Setting up...";
+          btn.disabled = true;
+        }
+
+        setTimeout(() => {
+          if (role === "freelancer") {
+            window.location.href = "freelancer-dashboard.html";
+          } else {
+            window.location.href = "dashboard.html";
+          }
+        }, 1200);
+      }
+    </script>
+  </body>
+</html>

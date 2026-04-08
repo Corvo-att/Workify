@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Browse Talent</title>
+    <meta
+      name="description"
+      content="Find top freelancers for your project on Workify. Browse talent by skill, experience, and availability."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/freelancer-dashboard.css" />
+    <link rel="stylesheet" href="../css/browse.css" />
+    <style>
+      .browse-layout {
+        padding-top: 32px;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+      }
+      .main-wrapper {
+        overflow-x: hidden;
+      }
+    </style>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- ─── SIDEBAR (loaded by shared.js) ─────────────────── -->
+    <div
+      id="sidebar-placeholder"
+      data-component="components/sidebar-client.html"
+    ></div>
+
+    <!-- ─── MAIN WRAPPER ─────────────────────────────────── -->
+    <div class="main-wrapper">
+      <!-- ─── TOPBAR ─────────────────────────────────────────── -->
+      <header class="topbar">
+        <span class="topbar-title">Browse Talent</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Client</div>
+          <div class="icon-btn" title="Notifications">
+            <i data-lucide="bell" style="width: 18px; height: 18px"></i>
+            <span class="notif-dot"></span>
+          </div>
+          <div
+            class="avatar"
+            style="width: 36px; height: 36px; font-size: 13px; cursor: pointer"
+          >
+            JD
+          </div>
+        </div>
+      </header>
+
+      <!-- ─── BROWSE LAYOUT ──────────────────────────────────── -->
+      <div class="browse-layout">
+        <!-- ─── FILTER SIDEBAR ─────────────────────────────── -->
+        <aside class="filter-sidebar">
+          <div class="panel-head">
+            <h2>Filters</h2>
+            <p>Refine your talent search</p>
+          </div>
+
+          <!-- Skill Category -->
+          <div class="filter-block">
+            <div class="label-caps">Skill Category</div>
+            <div class="checkbox-group">
+              <label><input type="checkbox" /> Web Development</label>
+              <label><input type="checkbox" /> UI/UX Design</label>
+              <label><input type="checkbox" /> Mobile Development</label>
+              <label><input type="checkbox" /> Content Writing</label>
+              <label><input type="checkbox" /> Marketing</label>
+              <label><input type="checkbox" /> Data Science</label>
+            </div>
+          </div>
+
+          <!-- Experience Level -->
+          <div class="filter-block">
+            <div class="label-caps">Experience Level</div>
+            <div class="chip-group">
+              <button class="chip">Entry</button>
+              <button class="chip active">Mid-Level</button>
+              <button class="chip">Expert</button>
+            </div>
+          </div>
+
+          <!-- Hourly Rate -->
+          <div class="filter-block">
+            <div class="label-caps">Hourly Rate</div>
+            <input
+              type="range"
+              class="range-slider"
+              min="10"
+              max="200"
+              value="75"
+              id="rate-slider"
+            />
+            <div class="range-meta">
+              <span>$10/hr</span>
+              <span id="rate-value">$75/hr</span>
+              <span>$200/hr</span>
+            </div>
+          </div>
+
+          <!-- Availability -->
+          <div class="filter-block">
+            <div class="label-caps">Availability</div>
+            <div class="toggle-group">
+              <button class="toggle-btn active">Any</button>
+              <button class="toggle-btn">Full-Time</button>
+              <button class="toggle-btn">Part-Time</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ─── CONTENT AREA ───────────────────────────────── -->
+        <div class="content-area">
+          <div class="results-head">
+            <h1>Browse Talent</h1>
+            <p>Find and hire top freelancers for your project</p>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="search-bar">
+            <i data-lucide="search"></i>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search by skill, name, or keyword…"
+              id="talent-search"
+            />
+            <div class="divider-vertical"></div>
+            <select class="search-dropdown" id="sort-talent">
+              <option value="relevance">Relevance</option>
+              <option value="rating">Top Rated</option>
+              <option value="rate-low">Rate: Low → High</option>
+              <option value="rate-high">Rate: High → Low</option>
+            </select>
+          </div>
+
+          <div class="result-count">
+            Showing <span>8</span> freelancers matching your criteria
+          </div>
+
+          <!-- ─── TALENT GRID ────────────────────────────── -->
+          <div class="talent-grid">
+            <!-- Card 1 -->
+            <div class="talent-card">
+              <div class="talent-avatar-wrapper">
+                <div
+                  class="talent-avatar"
+                  style="background: linear-gradient(135deg, #5b4fe9, #a78bfa)"
+                >
+                  SM
+                </div>
+                <span class="online-dot"></span>
+              </div>
+              <div class="talent-name">Sarah Mitchell</div>
+              <div class="talent-headline">
+                Senior UI/UX Designer · Figma & Design Systems
+              </div>
+              <div class="talent-stats">
+                <i
+                  data-lucide="star"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #eab308;
+                    color: #eab308;
+                  "
+                ></i>
+                <strong>4.9</strong>
+                <span style="color: var(--text-muted)">(124 reviews)</span>
+              </div>
+              <div class="talent-skills">
+                <span class="chip">Figma</span>
+                <span class="chip">UI Design</span>
+                <span class="chip">Prototyping</span>
+              </div>
+              <div class="talent-footer">
+                <span class="hourly-rate">$85/hr</span>
+                <a href="#" class="primary-button small">View Profile</a>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="talent-card">
+              <div class="talent-avatar-wrapper">
+                <div
+                  class="talent-avatar"
+                  style="background: linear-gradient(135deg, #f97316, #fbbf24)"
+                >
+                  JC
+                </div>
+                <span class="online-dot"></span>
+              </div>
+              <div class="talent-name">James Chen</div>
+              <div class="talent-headline">
+                Full-Stack Developer · React & Node.js
+              </div>
+              <div class="talent-stats">
+                <i
+                  data-lucide="star"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #eab308;
+                    color: #eab308;
+                  "
+                ></i>
+                <strong>4.8</strong>
+                <span style="color: var(--text-muted)">(98 reviews)</span>
+              </div>
+              <div class="talent-skills">
+                <span class="chip">React</span>
+                <span class="chip">Node.js</span>
+                <span class="chip">TypeScript</span>
+              </div>
+              <div class="talent-footer">
+                <span class="hourly-rate">$95/hr</span>
+                <a href="#" class="primary-button small">View Profile</a>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="talent-card">
+              <div class="talent-avatar-wrapper">
+                <div
+                  class="talent-avatar"
+                  style="background: linear-gradient(135deg, #22c55e, #86efac)"
+                >
+                  EP
+                </div>
+              </div>
+              <div class="talent-name">Emily Parker</div>
+              <div class="talent-headline">
+                Content Strategist & SEO Specialist
+              </div>
+              <div class="talent-stats">
+                <i
+                  data-lucide="star"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #eab308;
+                    color: #eab308;
+                  "
+                ></i>
+                <strong>4.7</strong>
+                <span style="color: var(--text-muted)">(56 reviews)</span>
+              </div>
+              <div class="talent-skills">
+                <span class="chip">SEO</span>
+                <span class="chip">Content Strategy</span>
+                <span class="chip">Copywriting</span>
+              </div>
+              <div class="talent-footer">
+                <span class="hourly-rate">$60/hr</span>
+                <a href="#" class="primary-button small">View Profile</a>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="talent-card">
+              <div class="talent-avatar-wrapper">
+                <div
+                  class="talent-avatar"
+                  style="background: linear-gradient(135deg, #3b82f6, #93c5fd)"
+                >
+                  AK
+                </div>
+                <span class="online-dot"></span>
+              </div>
+              <div class="talent-name">Alex Kumar</div>
+              <div class="talent-headline">
+                Mobile Developer · Flutter & Swift
+              </div>
+              <div class="talent-stats">
+                <i
+                  data-lucide="star"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #eab308;
+                    color: #eab308;
+                  "
+                ></i>
+                <strong>5.0</strong>
+                <span style="color: var(--text-muted)">(72 reviews)</span>
+              </div>
+              <div class="talent-skills">
+                <span class="chip">Flutter</span>
+                <span class="chip">Swift</span>
+                <span class="chip">Firebase</span>
+              </div>
+              <div class="talent-footer">
+                <span class="hourly-rate">$110/hr</span>
+                <a href="#" class="primary-button small">View Profile</a>
+              </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="talent-card">
+              <div class="talent-avatar-wrapper">
+                <div
+                  class="talent-avatar"
+                  style="background: linear-gradient(135deg, #ec4899, #f9a8d4)"
+                >
+                  LR
+                </div>
+              </div>
+              <div class="talent-name">Lisa Rodriguez</div>
+              <div class="talent-headline">Brand Designer & Illustrator</div>
+              <div class="talent-stats">
+                <i
+                  data-lucide="star"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #eab308;
+                    color: #eab308;
+                  "
+                ></i>
+                <strong>4.9</strong>
+                <span style="color: var(--text-muted)">(89 reviews)</span>
+              </div>
+              <div class="talent-skills">
+                <span class="chip">Branding</span>
+                <span class="chip">Illustration</span>
+                <span class="chip">Adobe Suite</span>
+              </div>
+              <div class="talent-footer">
+                <span class="hourly-rate">$75/hr</span>
+                <a href="#" class="primary-button small">View Profile</a>
+              </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="talent-card">
+              <div class="talent-avatar-wrapper">
+                <div
+                  class="talent-avatar"
+                  style="background: linear-gradient(135deg, #8b5cf6, #c4b5fd)"
+                >
+                  DW
+                </div>
+                <span class="online-dot"></span>
+              </div>
+              <div class="talent-name">David Wilson</div>
+              <div class="talent-headline">Backend Engineer · Python & AWS</div>
+              <div class="talent-stats">
+                <i
+                  data-lucide="star"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #eab308;
+                    color: #eab308;
+                  "
+                ></i>
+                <strong>4.8</strong>
+                <span style="color: var(--text-muted)">(115 reviews)</span>
+              </div>
+              <div class="talent-skills">
+                <span class="chip">Python</span>
+                <span class="chip">AWS</span>
+                <span class="chip">PostgreSQL</span>
+              </div>
+              <div class="talent-footer">
+                <span class="hourly-rate">$90/hr</span>
+                <a href="#" class="primary-button small">View Profile</a>
+              </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="talent-card">
+              <div class="talent-avatar-wrapper">
+                <div
+                  class="talent-avatar"
+                  style="background: linear-gradient(135deg, #14b8a6, #5eead4)"
+                >
+                  MT
+                </div>
+              </div>
+              <div class="talent-name">Maria Torres</div>
+              <div class="talent-headline">
+                Data Analyst · SQL & Tableau Expert
+              </div>
+              <div class="talent-stats">
+                <i
+                  data-lucide="star"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #eab308;
+                    color: #eab308;
+                  "
+                ></i>
+                <strong>4.6</strong>
+                <span style="color: var(--text-muted)">(43 reviews)</span>
+              </div>
+              <div class="talent-skills">
+                <span class="chip">SQL</span>
+                <span class="chip">Tableau</span>
+                <span class="chip">Python</span>
+              </div>
+              <div class="talent-footer">
+                <span class="hourly-rate">$70/hr</span>
+                <a href="#" class="primary-button small">View Profile</a>
+              </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="talent-card">
+              <div class="talent-avatar-wrapper">
+                <div
+                  class="talent-avatar"
+                  style="background: linear-gradient(135deg, #f43f5e, #fda4af)"
+                >
+                  RH
+                </div>
+                <span class="online-dot"></span>
+              </div>
+              <div class="talent-name">Ryan Hughes</div>
+              <div class="talent-headline">
+                DevOps Engineer · Kubernetes & CI/CD
+              </div>
+              <div class="talent-stats">
+                <i
+                  data-lucide="star"
+                  style="
+                    width: 16px;
+                    height: 16px;
+                    fill: #eab308;
+                    color: #eab308;
+                  "
+                ></i>
+                <strong>4.9</strong>
+                <span style="color: var(--text-muted)">(67 reviews)</span>
+              </div>
+              <div class="talent-skills">
+                <span class="chip">Docker</span>
+                <span class="chip">Kubernetes</span>
+                <span class="chip">Terraform</span>
+              </div>
+              <div class="talent-footer">
+                <span class="hourly-rate">$120/hr</span>
+                <a href="#" class="primary-button small">View Profile</a>
+              </div>
+            </div>
+          </div>
+          <!-- /talent-grid -->
+        </div>
+        <!-- /content-area -->
+      </div>
+      <!-- /browse-layout -->
+
+      <!-- ─── FOOTER ──────────────────────────────────────────── -->
+      <div id="footer-placeholder"></div>
+    </div>
+
+    <!-- ─── SCRIPTS ─────────────────────────────────────────── -->
+    <script src="../js/shared.js"></script>
+    <script>
+      // Initialize Lucide icons
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons();
+        }
+
+        // Range slider value display
+        var slider = document.getElementById("rate-slider");
+        var valueDisplay = document.getElementById("rate-value");
+        if (slider && valueDisplay) {
+          slider.addEventListener("input", function () {
+            valueDisplay.textContent = "$" + this.value + "/hr";
+            // Update the gradient fill
+            var pct = ((this.value - this.min) / (this.max - this.min)) * 100;
+            this.style.background =
+              "linear-gradient(90deg, var(--primary) " +
+              pct +
+              "%, var(--bg-elevated) " +
+              pct +
+              "%)";
+          });
+          // Fire once to set initial fill
+          slider.dispatchEvent(new Event("input"));
+        }
+
+        // Toggle buttons (Availability)
+        var toggleGroups = document.querySelectorAll(".toggle-group");
+        toggleGroups.forEach(function (group) {
+          var buttons = group.querySelectorAll(".toggle-btn");
+          buttons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              buttons.forEach(function (b) {
+                b.classList.remove("active");
+              });
+              btn.classList.add("active");
+            });
+          });
+        });
+
+        // Chip toggles (Experience Level)
+        var chipGroups = document.querySelectorAll(".chip-group");
+        chipGroups.forEach(function (group) {
+          var chips = group.querySelectorAll(".chip");
+          chips.forEach(function (chip) {
+            chip.addEventListener("click", function () {
+              chip.classList.toggle("active");
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

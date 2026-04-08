@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Active Contracts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/active-contract.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- ═══ SIDEBAR (loaded by shared.js) ═════════════════════ -->
+    <div
+      id="sidebar-placeholder"
+      data-component="components/sidebar-freelancer.html"
+    ></div>
+
+    <!-- ═══ MAIN ═══════════════════════════════════════════════════ -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <span class="topbar-title">Active Contracts</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Freelancer</div>
+          <div class="icon-btn">
+            <i data-lucide="bell" style="width: 18px; height: 18px"></i>
+            <span class="notif-dot"></span>
+          </div>
+          <div class="avatar" style="cursor: pointer">AK</div>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-heading">
+          <h1 class="page-title">Active Contracts</h1>
+          <p class="page-subtitle">
+            2 ongoing projects · Total value:
+            <span class="total-val">$13,600</span>
+          </p>
+        </div>
+
+        <div class="contracts-grid" id="contractsGrid"></div>
+      </main>
+    </div>
+
+    <!-- ─── SUBMIT WORK MODAL ─────────────────────────────────── -->
+    <div
+      class="modal-overlay"
+      id="modalOverlay"
+      onclick="closeModalOnOverlay(event)"
+    >
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <div class="modal-title" id="modalTitle">Submit Work</div>
+            <div class="modal-sub" id="modalSub">Milestone · $0</div>
+          </div>
+          <button class="modal-close" onclick="closeModal()">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <div class="modal-field">
+          <label class="modal-label">Delivery Notes</label>
+          <textarea
+            class="modal-textarea"
+            placeholder="Describe what you've delivered, any known issues, and links to the work..."
+          ></textarea>
+        </div>
+
+        <div class="modal-field">
+          <label class="modal-label">Attachments (optional)</label>
+          <div
+            class="modal-file-zone"
+            onclick="document.getElementById('fileInput').click()"
+          >
+            <i data-lucide="upload-cloud"></i>
+            <div class="modal-file-label">
+              <span>Click to upload</span> or drag and drop files here
+            </div>
+          </div>
+          <input type="file" id="fileInput" style="display: none" multiple />
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn-modal-cancel" onclick="closeModal()">
+            Cancel
+          </button>
+          <button class="btn-modal-submit" onclick="submitWork()">
+            <i data-lucide="send"></i> Submit for Review
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── TOAST ─────────────────────────────────────────────── -->
+    <div class="toast" id="toast">
+      <i data-lucide="check-circle"></i>
+      <span class="toast-text"
+        ><strong id="toastText">Work submitted!</strong> The client will review
+        and release payment.</span
+      >
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script>
+      /* ── CONTRACT DATA ──────────────────────────────────────── */
+      const CONTRACTS = [
+        {
+          id: 1,
+          title: "Full-Stack API Build",
+          client: "DataSync Co.",
+          clientLetter: "D",
+          clientColor: "#5B4FE9",
+          totalValue: "$8,500",
+          currentMilestone: 2,
+          totalMilestones: 4,
+          progressPct: 40,
+          endDate: "Apr 15, 2026",
+          urgentMsg: null,
+          milestones: [
+            {
+              label: "Project setup & DB schema",
+              amount: "$1,500",
+              status: "released",
+              due: null,
+              showBar: true,
+            },
+            {
+              label: "Core API endpoints",
+              amount: "$2,500",
+              status: "in-review",
+              due: "Mar 18",
+              showBar: true,
+            },
+            {
+              label: "Auth & permissions layer",
+              amount: "$2,500",
+              status: "funded",
+              due: null,
+              showBar: true,
+            },
+            {
+              label: "Testing & documentation",
+              amount: "$2,000",
+              status: "upcoming",
+              due: null,
+              showBar: false,
+            },
+          ],
+        },
+        {
+          id: 2,
+          title: "Blockchain Analytics Dashboard",
+          client: "CryptoBase",
+          clientLetter: "C",
+          clientColor: "#F97316",
+          totalValue: "$5,100",
+          currentMilestone: 1,
+          totalMilestones: 3,
+          progressPct: 18,
+          endDate: null,
+          urgentMsg: "Due in 2 days — Mar 16",
+          milestones: [
+            {
+              label: "Design system & wireframes",
+              amount: "$1,100",
+              status: "funded",
+              due: "Mar 16",
+              showBar: true,
+            },
+            {
+              label: "Chart components & data feeds",
+              amount: "$2,500",
+              status: "upcoming",
+              due: null,
+              showBar: false,
+            },
+            {
+              label: "Final integration & deploy",
+              amount: "$1,500",
+              status: "upcoming",
+              due: null,
+              showBar: false,
+            },
+          ],
+        },
+      ];
+
+      /* ── STATUS CONFIG ────────────────────────────────────────── */
+      const STATUS_CFG = {
+        released: {
+          bubbleClass: "released",
+          tagClass: "released",
+          icon: "check",
+          label: "Released",
+        },
+        "in-review": {
+          bubbleClass: "in-review",
+          tagClass: "in-review",
+          icon: "clock",
+          label: "In Review",
+        },
+        funded: {
+          bubbleClass: "funded",
+          tagClass: "funded",
+          icon: "circle",
+          label: "Funded",
+        },
+        upcoming: {
+          bubbleClass: "upcoming",
+          tagClass: "upcoming",
+          icon: null,
+          label: "Upcoming",
+        },
+      };
+
+      /* ── RENDER ────────────────────────────────────────────────── */
+      function renderContracts() {
+        const grid = document.getElementById("contractsGrid");
+        grid.innerHTML = "";
+
+        CONTRACTS.forEach((contract) => {
+          const card = document.createElement("div");
+          card.className = "contract-card";
+          card.dataset.contractId = contract.id;
+
+          /* Milestones HTML */
+          let milestonesHtml = "";
+          contract.milestones.forEach((m, i) => {
+            const cfg = STATUS_CFG[m.status];
+            const bubbleContent =
+              m.status === "released" ? `<i data-lucide="check"></i>` : i + 1;
+
+            const tagHtml = `
+          <span class="mini-tag ${cfg.tagClass}">
+            ${cfg.icon && m.status !== "upcoming" ? `<i data-lucide="${cfg.icon}"></i>` : ""}
+            ${cfg.label}
+          </span>`;
+
+            const dueHtml = m.due
+              ? `<span class="due-tag ${contract.urgentMsg && m.due === "Mar 16" ? "urgent" : ""}">
+               <i data-lucide="clock"></i> Due ${m.due}
+             </span>`
+              : "";
+
+            const showTags = m.status !== "upcoming" || m.due;
+
+            const barHtml = m.showBar
+              ? `
+          <div class="milestone-bar-wrap">
+            <div class="milestone-bar-track">
+              <div class="milestone-bar-fill ${m.status}"></div>
+            </div>
+          </div>`
+              : "";
+
+            milestonesHtml += `
+          <div class="milestone-item">
+            <div class="step-col">
+              <div class="step-bubble ${cfg.bubbleClass}">${bubbleContent}</div>
+            </div>
+            <div class="milestone-info">
+              <div class="milestone-title-text">${m.label}</div>
+              <div class="milestone-meta"><span class="amount">${m.amount}</span> · ${cfg.label}</div>
+              ${showTags ? `<div class="milestone-tags">${tagHtml}${dueHtml}</div>` : ""}
+              ${barHtml}
+            </div>
+          </div>`;
+          });
+
+          /* Footer HTML */
+          let footerHtml = "";
+          if (contract.urgentMsg) {
+            footerHtml = `
+          <span class="urgent-label"><i data-lucide="alert-triangle"></i> ${contract.urgentMsg}</span>
+          <button class="btn-submit-work" onclick="openModal(${contract.id})">
+            <i data-lucide="upload"></i> Submit Work
+          </button>
+          <button class="btn-chat"><i data-lucide="message-circle"></i> Chat</button>`;
+          } else {
+            footerHtml = `
+          <span class="footer-end-date"><i data-lucide="calendar"></i> Contract ends ${contract.endDate}</span>
+          <button class="btn-submit-work" onclick="openModal(${contract.id})">
+            Submit Work
+          </button>
+          <button class="btn-chat"><i data-lucide="message-circle"></i> Chat</button>`;
+          }
+
+          card.innerHTML = `
+        <!-- CARD HEADER -->
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-title">${contract.title}</div>
+            <div class="client-row">
+              <div class="client-logo" style="background:${contract.clientColor};">${contract.clientLetter}</div>
+              <span class="client-name">${contract.client}</span>
+            </div>
+          </div>
+          <div class="card-value-block">
+            <span class="card-value">${contract.totalValue}</span>
+            <span class="card-value-label">Total Value</span>
+          </div>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="progress-label">Progress</span>
+            <span class="milestone-indicator">Milestone ${contract.currentMilestone} of ${contract.totalMilestones}</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width:${contract.progressPct}%;"></div>
+          </div>
+        </div>
+
+        <!-- MILESTONES -->
+        <div class="milestone-list">${milestonesHtml}</div>
+
+        <!-- FOOTER -->
+        <div class="card-footer">${footerHtml}</div>
+      `;
+
+          grid.appendChild(card);
+        });
+
+        lucide.createIcons();
+      }
+
+      /* ── MODAL ─────────────────────────────────────────────────── */
+      let activeContractId = null;
+
+      function openModal(contractId) {
+        const contract = CONTRACTS.find((c) => c.id === contractId);
+        if (!contract) return;
+        activeContractId = contractId;
+
+        // Find current active milestone
+        const activeMilestone =
+          contract.milestones.find(
+            (m) => m.status === "funded" || m.status === "in-review",
+          ) || contract.milestones[0];
+        document.getElementById("modalTitle").textContent =
+          `Submit Work — ${contract.title}`;
+        document.getElementById("modalSub").textContent =
+          `${activeMilestone.label} · ${activeMilestone.amount}`;
+
+        document.querySelector(".modal-textarea").value = "";
+        document.getElementById("modalOverlay").classList.add("open");
+        lucide.createIcons();
+        setTimeout(
+          () => document.querySelector(".modal-textarea").focus(),
+          300,
+        );
+      }
+
+      function closeModal() {
+        document.getElementById("modalOverlay").classList.remove("open");
+        activeContractId = null;
+      }
+
+      function closeModalOnOverlay(e) {
+        if (e.target === document.getElementById("modalOverlay")) closeModal();
+      }
+
+      function submitWork() {
+        const notes = document.querySelector(".modal-textarea").value.trim();
+        if (!notes) {
+          const ta = document.querySelector(".modal-textarea");
+          ta.style.borderColor = "var(--danger)";
+          ta.style.boxShadow = "0 0 0 3px rgba(239,68,68,0.15)";
+          setTimeout(() => {
+            ta.style.borderColor = "";
+            ta.style.boxShadow = "";
+          }, 2000);
+          return;
+        }
+        closeModal();
+        showToast("Work submitted for review!");
+      }
+
+      /* ── TOAST ─────────────────────────────────────────────────── */
+      function showToast(msg) {
+        const toast = document.getElementById("toast");
+        document.getElementById("toastText").textContent = msg;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 4000);
+      }
+
+      /* ── KEYBOARD ─────────────────────────────────────────────── */
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // Init
+      renderContracts();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,279 @@
+<!-- ============================================================
+     SIDEBAR.HTML — Workify Dashboard Sidebar
+     Used only on authenticated/dashboard pages.
+     Loaded by shared.js into:  <div id="sidebar-placeholder"></div>
+     
+     On desktop: full 260px sidebar
+     On tablet:  collapses to 64px icon rail
+     On mobile:  becomes a bottom navigation bar (handled by CSS)
+     ============================================================ -->
+
+<aside class="sidebar" id="main-sidebar">
+  <!-- ===== Logo (top of sidebar) ===== -->
+  <div class="sidebar-logo flex items-center gap-2 mb-8">
+    <a href="#" data-route="index.html" class="flex items-center gap-2">
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="8" fill="url(#sb-logo-grad)" />
+        <path
+          d="M8 10L12 22L16 14L20 22L24 10"
+          stroke="white"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <defs>
+          <linearGradient id="sb-logo-grad" x1="0" y1="0" x2="32" y2="32">
+            <stop stop-color="#5B4FE9" />
+            <stop offset="1" stop-color="#A78BFA" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span
+        class="sidebar-label font-display font-bold text-md"
+        style="color: var(--text-primary)"
+        >Workify</span
+      >
+    </a>
+  </div>
+
+  <!-- ===== Navigation links ===== -->
+  <nav class="flex flex-col gap-1 flex-1" id="sidebar-nav">
+    <!-- Dashboard -->
+    <a
+      href="#"
+      data-route="pages/dashboard.html"
+      class="sidebar-link"
+      data-page="dashboard"
+    >
+      <!-- Lucide: layout-dashboard -->
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="3" y="3" width="7" height="7" rx="1" />
+        <rect x="14" y="3" width="7" height="7" rx="1" />
+        <rect x="3" y="14" width="7" height="7" rx="1" />
+        <rect x="14" y="14" width="7" height="7" rx="1" />
+      </svg>
+      <span class="sidebar-label">Dashboard</span>
+    </a>
+
+    <!-- Browse Jobs -->
+    <a
+      href="#"
+      data-route="pages/browse-jobs.html"
+      class="sidebar-link"
+      data-page="browse-jobs"
+    >
+      <!-- Lucide: briefcase -->
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+      </svg>
+      <span class="sidebar-label">Browse Jobs</span>
+    </a>
+
+    <!-- My Proposals (freelancer) / My Postings (client) -->
+    <a
+      href="/pages/my-proposal.html"
+      class="sidebar-link"
+      data-page="my-proposal"
+    >
+      <!-- Lucide: file-text -->
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
+      </svg>
+      <span class="sidebar-label">Proposals</span>
+    </a>
+
+    <!-- Contracts -->
+    <a
+      href="/pages/active-contract.html"
+      class="sidebar-link"
+      data-page="active-contract"
+    >
+      <!-- Lucide: handshake (simplified) -->
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M20 6L9 17l-5-5" />
+        <path d="M4 12l5 5 11-11" />
+      </svg>
+      <span class="sidebar-label">Contracts</span>
+    </a>
+
+    <!-- Messages -->
+    <a
+      href="/pages/collaboration.html#chat"
+      class="sidebar-link"
+      data-page="collaboration"
+      data-hash="chat"
+    >
+      <!-- Lucide: message-square -->
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+        />
+      </svg>
+      <span class="sidebar-label">Messages</span>
+    </a>
+
+    <!-- Wallet -->
+    <a
+      href="/pages/collaboration.html#wallet"
+      class="sidebar-link"
+      data-page="collaboration"
+      data-hash="wallet"
+    >
+      <!-- Lucide: wallet -->
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+        <path d="M18 12a2 2 0 0 0 0 4h4v-4z" />
+      </svg>
+      <span class="sidebar-label">Wallet</span>
+    </a>
+  </nav>
+
+  <!-- ===== Bottom section: role badge + collapse button ===== -->
+  <div class="mt-8">
+    <!-- Role badge -->
+    <div class="sidebar-role-badge mb-4">
+      <span class="role-badge" id="sidebar-role">Freelancer</span>
+    </div>
+
+    <!-- Collapse / expand button -->
+    <button
+      class="btn-icon sidebar-collapse-btn w-full flex justify-center"
+      id="sidebar-collapse-toggle"
+      aria-label="Toggle sidebar"
+    >
+      <!-- Lucide: chevrons-left -->
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        id="collapse-icon"
+      >
+        <polyline points="11 17 6 12 11 7" />
+        <polyline points="18 17 13 12 18 7" />
+      </svg>
+    </button>
+  </div>
+</aside>
+
+<!-- ===== Sidebar-specific styles ===== -->
+<style>
+  /* Sidebar nav link */
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    color: var(--text-muted);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-medium);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .sidebar-link:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+  }
+  .sidebar-link.active {
+    background: rgba(91, 79, 233, 0.12);
+    color: var(--primary-light);
+  }
+
+  /* Icon stays centered when labels are hidden */
+  .sidebar-link svg {
+    flex-shrink: 0;
+  }
+
+  /* Collapsed sidebar — center the icons */
+  .sidebar.collapsed .sidebar-link {
+    justify-content: center;
+    padding: var(--space-3);
+  }
+  .sidebar.collapsed .sidebar-role-badge {
+    display: none;
+  }
+
+  /* Flip the collapse icon when sidebar is collapsed */
+  .sidebar.collapsed #collapse-icon {
+    transform: rotate(180deg);
+  }
+
+  /* On mobile, sidebar links go horizontal (bottom nav style) */
+  @media (max-width: 767px) {
+    .sidebar-link {
+      flex-direction: column;
+      gap: 2px;
+      font-size: 10px;
+      padding: var(--space-1);
+    }
+    .sidebar-link svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+</style>

@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Client Contract Management</title>
+    <meta
+      name="description"
+      content="Track milestones, escrow, and payment status for all your contracts on Workify."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/collaboration.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <div
+      id="sidebar-placeholder"
+      data-component="components/sidebar-client.html"
+    ></div>
+
+    <!-- MAIN -->
+    <div class="page-wrapper">
+      <header class="topbar">
+        <span class="topbar-title">Contract Management</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Client</div>
+          <button
+            class="btn btn-ghost btn-sm"
+            type="button"
+            onclick="alert('Demo only')"
+          >
+            <i data-lucide="download" style="width: 16px; height: 16px"></i>
+            Export
+          </button>
+          <div
+            class="avatar"
+            style="
+              width: 36px;
+              height: 36px;
+              font-size: 13px;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: var(--bg-elevated);
+              border-radius: 50%;
+            "
+          >
+            JD
+          </div>
+        </div>
+      </header>
+
+      <main class="content collab-content">
+        <div class="grid" style="align-items: start">
+          <!-- Contract List -->
+          <div class="col-4">
+            <div class="collab-card">
+              <div class="collab-card-header">
+                <div class="collab-card-title">
+                  <i data-lucide="filter" style="width: 20px; height: 20px"></i>
+                  <h2>Contracts</h2>
+                </div>
+                <span class="badge"
+                  ><span class="collab-dot"></span> Source of Truth</span
+                >
+              </div>
+              <div class="collab-card-body">
+                <!-- Tab filter -->
+                <div class="tab-bar collab-tabs" data-tabs>
+                  <button
+                    class="tab-item active"
+                    aria-selected="true"
+                    data-tab="true"
+                    data-filter="all"
+                  >
+                    All
+                  </button>
+                  <button
+                    class="tab-item"
+                    aria-selected="false"
+                    data-tab="true"
+                    data-filter="funded"
+                  >
+                    Funded
+                  </button>
+                  <button
+                    class="tab-item"
+                    aria-selected="false"
+                    data-tab="true"
+                    data-filter="in_review"
+                  >
+                    In Review
+                  </button>
+                  <button
+                    class="tab-item"
+                    aria-selected="false"
+                    data-tab="true"
+                    data-filter="released"
+                  >
+                    Released
+                  </button>
+                </div>
+
+                <div
+                  style="
+                    margin-top: 16px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                  "
+                >
+                  <div data-filter-item="funded">
+                    <div
+                      class="collab-thread"
+                      data-active="false"
+                      style="cursor: default"
+                    >
+                      <div class="collab-thread-meta">
+                        <div class="collab-thread-name">Hire #CX-2041</div>
+                        <div class="collab-thread-preview">
+                          Landing Redesign • $2,400
+                        </div>
+                      </div>
+                      <span class="badge badge-success"
+                        ><span class="collab-dot"></span> Funded</span
+                      >
+                    </div>
+                  </div>
+                  <div data-filter-item="in_review">
+                    <div
+                      class="collab-thread"
+                      data-active="false"
+                      style="cursor: default"
+                    >
+                      <div class="collab-thread-meta">
+                        <div class="collab-thread-name">Hire #CX-2109</div>
+                        <div class="collab-thread-preview">
+                          Dashboard UI • $1,750
+                        </div>
+                      </div>
+                      <span class="badge badge-warning"
+                        ><span class="collab-dot"></span> In Review</span
+                      >
+                    </div>
+                  </div>
+                  <div data-filter-item="released">
+                    <div
+                      class="collab-thread"
+                      data-active="false"
+                      style="cursor: default"
+                    >
+                      <div class="collab-thread-meta">
+                        <div class="collab-thread-name">Hire #CX-1912</div>
+                        <div class="collab-thread-preview">
+                          Mobile Fixes • $980
+                        </div>
+                      </div>
+                      <span class="badge badge-success"
+                        ><span class="collab-dot"></span> Released</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <hr class="collab-divider" />
+
+                <div style="display: flex; flex-direction: column; gap: 10px">
+                  <div class="input-label" style="margin: 0">Status guide</div>
+                  <div style="display: flex; align-items: center; gap: 10px">
+                    <span class="badge badge-success"
+                      ><span class="collab-dot"></span> Funded</span
+                    >
+                    <span style="color: var(--text-muted); font-size: 13px"
+                      >Escrow protected</span
+                    >
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 10px">
+                    <span class="badge badge-warning"
+                      ><span class="collab-dot"></span> In Review</span
+                    >
+                    <span style="color: var(--text-muted); font-size: 13px"
+                      >Waiting for QA approval</span
+                    >
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 10px">
+                    <span class="badge badge-success"
+                      ><span class="collab-dot"></span> Released</span
+                    >
+                    <span style="color: var(--text-muted); font-size: 13px"
+                      >Payment transferred</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Milestones Panel -->
+          <div class="col-8">
+            <div class="collab-card collab-card-elevated">
+              <div class="collab-card-header">
+                <div class="collab-card-title">
+                  <i
+                    data-lucide="sparkles"
+                    style="width: 20px; height: 20px"
+                  ></i>
+                  <h2>Milestones • Hire #CX-2041</h2>
+                </div>
+                <div style="display: flex; gap: 8px">
+                  <button
+                    class="btn btn-ghost btn-sm"
+                    type="button"
+                    onclick="location.href = 'client-messages.html'"
+                  >
+                    <i
+                      data-lucide="message-square"
+                      style="width: 16px; height: 16px"
+                    ></i>
+                    Message
+                  </button>
+                  <button class="btn btn-primary btn-sm" type="button">
+                    <i
+                      data-lucide="check-circle-2"
+                      style="width: 16px; height: 16px"
+                    ></i>
+                    Confirm
+                  </button>
+                </div>
+              </div>
+              <div class="collab-card-body">
+                <!-- KPI row -->
+                <div class="collab-kpi-row" style="margin-bottom: 16px">
+                  <div class="collab-kpi">
+                    <div class="collab-kpi-label">Contract Value</div>
+                    <div class="collab-kpi-value">$2,400</div>
+                    <div class="collab-kpi-sub">Escrow funded</div>
+                  </div>
+                  <div class="collab-kpi">
+                    <div class="collab-kpi-label">Current Milestone</div>
+                    <div class="collab-kpi-value">QA Review</div>
+                    <div class="collab-kpi-sub">Waiting on approval</div>
+                  </div>
+                  <div class="collab-kpi">
+                    <div class="collab-kpi-label">Completion</div>
+                    <div class="collab-kpi-value">66%</div>
+                    <div class="collab-kpi-sub">3 of 5 milestones</div>
+                  </div>
+                </div>
+
+                <!-- Progress bar -->
+                <div class="progress-bar" aria-label="Milestone completion">
+                  <div class="progress-fill" style="width: 66%"></div>
+                </div>
+
+                <!-- Timeline -->
+                <div
+                  class="collab-timeline"
+                  style="margin-top: 16px"
+                  aria-label="Milestones timeline"
+                >
+                  <div class="collab-timeline-item">
+                    <div
+                      class="collab-timeline-dot collab-dot--success"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="collab-timeline-content">
+                      <div class="collab-milestone-top">
+                        <div class="collab-milestone-title">
+                          1) Design System &amp; Components
+                        </div>
+                        <span class="badge badge-success"
+                          ><span class="collab-dot"></span> Released</span
+                        >
+                      </div>
+                      <div class="collab-milestone-desc">
+                        Typography, tokens, and UI components ready for
+                        implementation.
+                      </div>
+                      <div class="collab-milestone-meta">
+                        Completed • 2 days ago
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="collab-timeline-item">
+                    <div
+                      class="collab-timeline-dot collab-dot--success"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="collab-timeline-content">
+                      <div class="collab-milestone-top">
+                        <div class="collab-milestone-title">
+                          2) Frontend Integration
+                        </div>
+                        <span class="badge badge-success"
+                          ><span class="collab-dot"></span> Released</span
+                        >
+                      </div>
+                      <div class="collab-milestone-desc">
+                        Shared pages integrated with your visual language and
+                        layout rules.
+                      </div>
+                      <div class="collab-milestone-meta">
+                        Completed • 1 day ago
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="collab-timeline-item">
+                    <div
+                      class="collab-timeline-dot collab-dot--warning"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="collab-timeline-content">
+                      <div class="collab-milestone-top">
+                        <div class="collab-milestone-title">
+                          3) QA Review &amp; Revisions
+                        </div>
+                        <span class="badge badge-warning"
+                          ><span class="collab-dot"></span> In Review</span
+                        >
+                      </div>
+                      <div class="collab-milestone-desc">
+                        Fixing edge cases and aligning spacing/hover states with
+                        requirements.
+                      </div>
+                      <div class="collab-milestone-meta">Due • Tomorrow</div>
+                    </div>
+                  </div>
+
+                  <div class="collab-timeline-item">
+                    <div
+                      class="collab-timeline-dot collab-dot--neutral"
+                      aria-hidden="true"
+                    ></div>
+                    <div class="collab-timeline-content">
+                      <div class="collab-milestone-top">
+                        <div class="collab-milestone-title">
+                          4) Performance Pass
+                        </div>
+                        <span class="badge"
+                          ><span class="collab-dot"></span> Funded</span
+                        >
+                      </div>
+                      <div class="collab-milestone-desc">
+                        Optimizing layout rendering, reducing UI jank, and
+                        polishing micro-interactions.
+                      </div>
+                      <div class="collab-milestone-meta">
+                        Planned • Next week
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr class="collab-divider" />
+
+                <div
+                  style="
+                    display: flex;
+                    gap: 12px;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: space-between;
+                  "
+                >
+                  <div>
+                    <div
+                      style="
+                        font-family: var(--font-display);
+                        font-weight: 900;
+                        font-size: 14px;
+                      "
+                    >
+                      Need to raise an issue?
+                    </div>
+                    <div
+                      style="
+                        margin-top: 6px;
+                        color: var(--text-muted);
+                        font-size: 13px;
+                        line-height: 1.5;
+                      "
+                    >
+                      Payments can be withheld when a dispute is opened from the
+                      Dispute Center.
+                    </div>
+                  </div>
+                  <button
+                    class="btn btn-danger"
+                    type="button"
+                    data-modal-open="#flag-modal"
+                  >
+                    <i data-lucide="flag" style="width: 16px; height: 16px"></i>
+                    Flag a Project
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Flag / Dispute Modal -->
+    <div class="modal-backdrop" id="flag-modal-backdrop" aria-hidden="true">
+      <div
+        id="flag-modal"
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Flag a Project"
+      >
+        <div class="collab-card-header">
+          <div class="collab-card-title">
+            <i data-lucide="flag" style="width: 20px; height: 20px"></i>
+            <h2>Flag a Project</h2>
+          </div>
+          <button
+            class="btn btn-ghost btn-sm"
+            data-modal-close="#flag-modal"
+            type="button"
+            aria-label="Close modal"
+          >
+            <i data-lucide="x" style="width: 16px; height: 16px"></i>
+            Close
+          </button>
+        </div>
+        <div class="collab-card-body">
+          <div class="collab-form-grid">
+            <div class="collab-span-2">
+              <label class="input-label" for="flag-project"
+                >Project / Hire</label
+              >
+              <input
+                id="flag-project"
+                class="input-field"
+                value="Hire #CX-2041"
+              />
+            </div>
+            <div>
+              <label class="input-label" for="flag-reason">Reason</label>
+              <select id="flag-reason" class="input-field">
+                <option>Work not delivered</option>
+                <option>Payment withheld</option>
+                <option>Quality / QA mismatch</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="input-label" for="flag-amount"
+                >Amount (optional)</label
+              >
+              <input id="flag-amount" class="input-field" placeholder="$0" />
+            </div>
+            <div class="collab-span-2">
+              <label class="input-label" for="flag-note">Details</label>
+              <textarea
+                id="flag-note"
+                class="input-field"
+                rows="4"
+                placeholder="Describe what happened and what you need."
+              ></textarea>
+            </div>
+          </div>
+          <hr class="collab-divider" />
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              justify-content: flex-end;
+              flex-wrap: wrap;
+            "
+          >
+            <button
+              class="btn btn-ghost"
+              data-modal-close="#flag-modal"
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              class="btn btn-primary"
+              type="button"
+              onclick="alert('Demo only: dispute submitted.')"
+            >
+              <i data-lucide="send" style="width: 16px; height: 16px"></i>
+              Submit Dispute
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script src="../js/collaboration.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

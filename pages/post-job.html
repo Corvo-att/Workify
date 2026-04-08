@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Post a Job</title>
+    <meta name="description" content="Create a new job posting on Workify to find the perfect freelance talent." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/freelancer-dashboard.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+      /* Post-job wizard extras */
+      .wizard-wrap {
+        max-width: 660px;
+        margin: 0 auto;
+      }
+      .wizard-steps {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin-bottom: 40px;
+        position: relative;
+      }
+      .wizard-steps::before {
+        content: '';
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        height: 2px;
+        background: var(--bg-surface);
+        z-index: 0;
+      }
+      .w-step {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+      }
+      .w-step-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--bg-surface);
+        border: 2px solid var(--bg-elevated);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display, 'Sora', sans-serif);
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--text-muted);
+        transition: all 0.3s ease;
+      }
+      .w-step-circle.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+        box-shadow: 0 0 0 4px rgba(91,79,233,0.2);
+      }
+      .w-step-circle.done {
+        background: var(--success);
+        border-color: var(--success);
+        color: #fff;
+      }
+      .w-step-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+      }
+      .w-step:has(.w-step-circle.active) .w-step-label,
+      .w-step:has(.w-step-circle.done) .w-step-label {
+        color: var(--text-primary);
+      }
+
+      /* Form fields */
+      .field {
+        margin-bottom: 20px;
+      }
+      .field-label {
+        display: block;
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+      }
+      .field-hint {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 5px;
+        line-height: 1.5;
+      }
+      .field-input,
+      .field-textarea,
+      .field-select {
+        width: 100%;
+        padding: 11px 14px;
+        background: var(--bg-surface);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        transition: border-color 0.2s;
+        outline: none;
+      }
+      .field-input:focus,
+      .field-textarea:focus,
+      .field-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(91,79,233,0.15);
+      }
+      .field-textarea {
+        min-height: 140px;
+        resize: vertical;
+        line-height: 1.6;
+      }
+      .field-select option {
+        background: var(--bg-surface);
+      }
+
+      /* Budget type radio toggle */
+      .budget-toggle {
+        display: flex;
+        gap: 12px;
+      }
+      .budget-option {
+        flex: 1;
+        border: 2px solid rgba(255,255,255,0.08);
+        border-radius: 10px;
+        padding: 14px;
+        cursor: pointer;
+        transition: border-color 0.2s, background 0.2s;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .budget-option input[type="radio"] { display: none; }
+      .budget-option.selected {
+        border-color: var(--primary);
+        background: rgba(91,79,233,0.08);
+      }
+      .budget-option-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: rgba(91,79,233,0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-light);
+        flex-shrink: 0;
+      }
+      .budget-option-title {
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-primary);
+      }
+      .budget-option-desc {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 3px;
+        line-height: 1.4;
+      }
+
+      .skills-chips-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .skill-tag {
+        background: rgba(91,79,233,0.12);
+        border: 1px solid rgba(91,79,233,0.25);
+        color: var(--primary-light);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: background 0.15s;
+        user-select: none;
+      }
+      .skill-tag:hover { background: rgba(91,79,233,0.22); }
+      .skill-tag span { font-size: 14px; font-weight: 400; }
+
+      /* Step content */
+      .step-content { display: none; animation: fadeUp 0.3s ease both; }
+      .step-content.active { display: block; }
+
+      /* Nav buttons */
+      .step-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+      }
+
+      /* card-frame */
+      .form-card {
+        background: var(--bg-surface);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: var(--shadow-card);
+      }
+      .form-card-title {
+        font-family: 'Sora', sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+      .form-card-sub {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder" data-component="components/sidebar-client.html"></div>
+
+    <div class="page-wrapper">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <span class="topbar-title">Post a Job</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Client</div>
+          <a href="client-dashboard.html" class="icon-btn" title="Close" style="display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;text-decoration:none;">
+            <i data-lucide="x" style="width:18px;height:18px;color:var(--text-muted);"></i>
+          </a>
+          <div class="avatar" style="cursor:pointer;">JD</div>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <main class="content">
+        <div class="greeting" style="text-align:center;">
+          <h1 class="greeting-headline" style="justify-content:center;">Find the perfect freelancer</h1>
+          <div class="greeting-date">Fill in the details below to create your job posting.</div>
+        </div>
+
+        <div class="wizard-wrap">
+          <!-- Step indicator -->
+          <div class="wizard-steps">
+            <div class="w-step">
+              <div class="w-step-circle active" data-step-circle="1">1</div>
+              <div class="w-step-label">Title &amp; Category</div>
+            </div>
+            <div class="w-step">
+              <div class="w-step-circle" data-step-circle="2">2</div>
+              <div class="w-step-label">Description &amp; Skills</div>
+            </div>
+            <div class="w-step">
+              <div class="w-step-circle" data-step-circle="3">3</div>
+              <div class="w-step-label">Budget &amp; Duration</div>
+            </div>
+          </div>
+
+          <div class="form-card">
+
+            <!-- ── STEP 1 ── -->
+            <div class="step-content active" data-step="1">
+              <div class="form-card-title">What would you like to hire for?</div>
+              <div class="form-card-sub">Give your job a clear, specific title to attract the right freelancers.</div>
+
+              <div class="field">
+                <label class="field-label" for="job-title">Job Title</label>
+                <input id="job-title" class="field-input" type="text" placeholder="e.g. Senior React Developer for Fintech App" />
+                <div class="field-hint">Be specific — titles like "Senior React Developer" get 3× more proposals than "Developer needed".</div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="job-category">Category</label>
+                <select id="job-category" class="field-select">
+                  <option value="">Select a category…</option>
+                  <option>Web Development</option>
+                  <option>Mobile Development</option>
+                  <option>UI / UX Design</option>
+                  <option>Graphic Design</option>
+                  <option>Writing &amp; Content</option>
+                  <option>Marketing &amp; SEO</option>
+                  <option>Data Science &amp; Analytics</option>
+                  <option>Video &amp; Animation</option>
+                  <option>Finance &amp; Accounting</option>
+                  <option>Customer Support</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="exp-level">Experience Level</label>
+                <select id="exp-level" class="field-select">
+                  <option>Entry Level — Looking for someone new to the field</option>
+                  <option selected>Intermediate — Looking for substantial experience</option>
+                  <option>Expert — Looking for highly experienced professionals</option>
+                </select>
+              </div>
+
+              <div class="step-nav">
+                <span></span>
+                <button type="button" class="btn-primary" onclick="goStep(2)">
+                  Next: Description <i data-lucide="arrow-right" style="width:15px;height:15px;vertical-align:middle;"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ── STEP 2 ── -->
+            <div class="step-content" data-step="2">
+              <div class="form-card-title">Describe your project</div>
+              <div class="form-card-sub">Help freelancers understand exactly what you need.</div>
+
+              <div class="field">
+                <label class="field-label" for="job-desc">Project Description</label>
+                <textarea id="job-desc" class="field-textarea" placeholder="We are building a fintech mobile app and need an experienced React developer to...&#10;&#10;What you'll do:&#10;- ...&#10;&#10;Requirements:&#10;- ..."></textarea>
+              </div>
+
+              <div class="field">
+                <label class="field-label">Required Skills</label>
+                <input id="skills-input" class="field-input" type="text" placeholder="Type a skill and press Enter…" />
+                <div class="skills-chips-wrap" id="skills-wrap">
+                  <div class="skill-tag" data-skill="React">React <span>×</span></div>
+                  <div class="skill-tag" data-skill="TypeScript">TypeScript <span>×</span></div>
+                  <div class="skill-tag" data-skill="Node.js">Node.js <span>×</span></div>
+                </div>
+              </div>
+
+              <div class="step-nav">
+                <button type="button" class="btn-outline" onclick="goStep(1)">
+                  <i data-lucide="arrow-left" style="width:15px;height:15px;vertical-align:middle;"></i> Back
+                </button>
+                <button type="button" class="btn-primary" onclick="goStep(3)">
+                  Next: Budget <i data-lucide="arrow-right" style="width:15px;height:15px;vertical-align:middle;"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ── STEP 3 ── -->
+            <div class="step-content" data-step="3">
+              <div class="form-card-title">Budget &amp; Timeline</div>
+              <div class="form-card-sub">Set expectations so freelancers can send you a relevant proposal.</div>
+
+              <div class="field">
+                <label class="field-label">Payment Type</label>
+                <div class="budget-toggle">
+                  <label class="budget-option selected" id="opt-hourly" onclick="selectBudgetType('hourly')">
+                    <input type="radio" name="budgetType" value="hourly" checked />
+                    <div class="budget-option-icon"><i data-lucide="clock" style="width:18px;height:18px;"></i></div>
+                    <div>
+                      <div class="budget-option-title">Hourly Rate</div>
+                      <div class="budget-option-desc">Pay based on time tracked. Best for ongoing work.</div>
+                    </div>
+                  </label>
+                  <label class="budget-option" id="opt-fixed" onclick="selectBudgetType('fixed')">
+                    <input type="radio" name="budgetType" value="fixed" />
+                    <div class="budget-option-icon"><i data-lucide="badge-dollar-sign" style="width:18px;height:18px;"></i></div>
+                    <div>
+                      <div class="budget-option-title">Fixed Price</div>
+                      <div class="budget-option-desc">Pay a set amount for the entire project.</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field" id="budget-hourly-field">
+                <label class="field-label" for="hourly-rate">Hourly Rate Budget</label>
+                <input id="hourly-rate" class="field-input" type="number" placeholder="$ per hour" min="1" />
+                <div class="field-hint">Suggest a range — e.g. $30–$50/hr. Freelancers can propose their own rate.</div>
+              </div>
+
+              <div class="field" id="budget-fixed-field" style="display:none;">
+                <label class="field-label" for="fixed-price">Fixed Project Budget</label>
+                <input id="fixed-price" class="field-input" type="number" placeholder="$ total" min="1" />
+                <div class="field-hint">This amount will be escrowed before work begins.</div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="duration">Project Duration</label>
+                <select id="duration" class="field-select">
+                  <option>Less than 1 month</option>
+                  <option selected>1 to 3 months</option>
+                  <option>3 to 6 months</option>
+                  <option>More than 6 months</option>
+                </select>
+              </div>
+
+              <div class="step-nav">
+                <button type="button" class="btn-outline" onclick="goStep(2)">
+                  <i data-lucide="arrow-left" style="width:15px;height:15px;vertical-align:middle;"></i> Back
+                </button>
+                <button type="button" class="btn-primary" onclick="publishJob()">
+                  <i data-lucide="send" style="width:15px;height:15px;vertical-align:middle;"></i> Publish Job
+                </button>
+              </div>
+            </div>
+
+          </div><!-- /form-card -->
+        </div><!-- /wizard-wrap -->
+      </main>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script>
+      lucide.createIcons();
+
+      function goStep(n) {
+        // Hide all
+        document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+        document.querySelector(`.step-content[data-step="${n}"]`).classList.add('active');
+
+        // Update circles
+        document.querySelectorAll('[data-step-circle]').forEach(el => {
+          const s = parseInt(el.dataset.stepCircle);
+          el.classList.remove('active', 'done');
+          if (s === n) el.classList.add('active');
+          else if (s < n) el.classList.add('done');
+        });
+        lucide.createIcons();
+      }
+
+      function selectBudgetType(type) {
+        document.getElementById('opt-hourly').classList.toggle('selected', type === 'hourly');
+        document.getElementById('opt-fixed').classList.toggle('selected', type === 'fixed');
+        document.getElementById('budget-hourly-field').style.display = type === 'hourly' ? '' : 'none';
+        document.getElementById('budget-fixed-field').style.display  = type === 'fixed'  ? '' : 'none';
+      }
+
+      // Skills chips
+      const skillsInput = document.getElementById('skills-input');
+      const skillsWrap  = document.getElementById('skills-wrap');
+
+      skillsInput && skillsInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ',') {
+          e.preventDefault();
+          const val = this.value.trim().replace(/,/g,'');
+          if (!val) return;
+          const chip = document.createElement('div');
+          chip.className = 'skill-tag';
+          chip.innerHTML = `${val} <span>×</span>`;
+          chip.addEventListener('click', () => chip.remove());
+          skillsWrap.appendChild(chip);
+          this.value = '';
+        }
+      });
+
+      // Remove existing chips
+      skillsWrap && skillsWrap.querySelectorAll('.skill-tag').forEach(chip => {
+        chip.addEventListener('click', () => chip.remove());
+      });
+
+      function publishJob() {
+        alert('Job published successfully! Redirecting to dashboard…');
+        window.location.href = 'client-dashboard.html';
+      }
+    </script>
+  </body>
+</html>

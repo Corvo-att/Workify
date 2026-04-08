@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — My Proposals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/my-proposal.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- ═══ SIDEBAR (loaded by shared.js) ═════════════════════ -->
+    <div
+      id="sidebar-placeholder"
+      data-component="components/sidebar-freelancer.html"
+    ></div>
+
+    <!-- ═══ MAIN ═══════════════════════════════════════════════════ -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <span class="topbar-title">My Proposals</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Freelancer</div>
+          <div class="icon-btn">
+            <i data-lucide="bell" style="width: 18px; height: 18px"></i>
+            <span class="notif-dot"></span>
+          </div>
+          <div class="avatar" style="cursor: pointer">AK</div>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-heading">
+          <h1 class="page-title">My Proposals</h1>
+          <p class="page-subtitle">Track and manage all your submitted bids</p>
+        </div>
+
+        <!-- TAB BAR -->
+        <div class="tab-bar" role="tablist">
+          <button
+            class="tab-btn active"
+            role="tab"
+            onclick="switchTab('submitted', this)"
+          >
+            Submitted (5)
+          </button>
+          <button
+            class="tab-btn"
+            role="tab"
+            onclick="switchTab('active', this)"
+          >
+            Active (2)
+          </button>
+          <button
+            class="tab-btn"
+            role="tab"
+            onclick="switchTab('archived', this)"
+          >
+            Archived (8)
+          </button>
+        </div>
+
+        <!-- TABLE CARD -->
+        <div class="table-card" id="tableCard">
+          <!-- TABLE HEAD -->
+          <div class="table-head">
+            <div class="th">Job Title</div>
+            <div class="th">Client</div>
+            <div class="th">Bid Amount</div>
+            <div class="th">Submitted</div>
+            <div class="th">Status</div>
+          </div>
+
+          <!-- TABLE BODY -->
+          <div class="table-body" id="tableBody"></div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script>
+      lucide.createIcons();
+
+      /* ── DATA ─────────────────────────────────────────────────── */
+      const DATA = {
+        submitted: [
+          {
+            id: 1,
+            title: "Senior React Developer – SaaS Dashboard",
+            client: "TechFlow Inc.",
+            bid: "$4,500",
+            date: "Mar 14, 2026",
+            status: "pending",
+            coverLetter:
+              "Hi TechFlow team, I'm a senior React developer with 6+ years building complex SaaS dashboards. I've worked extensively with Recharts, D3.js, and WebSocket integrations, and my previous project at DataSync involved real-time analytics across 50k+ active users. I'd love to bring that expertise to your project.",
+            bidNote: "$4,500 fixed",
+            timeline: "Apr 25, 2026",
+            response: null,
+          },
+          {
+            id: 2,
+            title: "Full-Stack Node.js & PostgreSQL API",
+            client: "DataSync Co.",
+            bid: "$85/hr",
+            date: "Mar 10, 2026",
+            status: "active",
+            coverLetter:
+              "I have deep expertise in Node.js microservices and PostgreSQL query optimization. I've built high-throughput APIs handling 10M+ daily requests and would be excited to architect a reliable, scalable solution for DataSync.",
+            bidNote: "$85/hr",
+            timeline: "May 1, 2026",
+            response:
+              "Great proposal! We'd like to move forward — please check your contract offer.",
+          },
+          {
+            id: 3,
+            title: "Mobile App UI Redesign (React Native)",
+            client: "AppWave",
+            bid: "$2,200",
+            date: "Mar 8, 2026",
+            status: "pending",
+            coverLetter:
+              "I specialize in React Native UI with a strong focus on smooth 60fps animations and Figma-to-code fidelity. I can deliver pixel-perfect screens while keeping codebase maintainability in mind.",
+            bidNote: "$2,200 fixed",
+            timeline: "Apr 18, 2026",
+            response: null,
+          },
+          {
+            id: 4,
+            title: "E-commerce Landing Page Redesign",
+            client: "StartupXYZ",
+            bid: "$800",
+            date: "Mar 2, 2026",
+            status: "declined",
+            coverLetter:
+              "I'd love to help StartupXYZ with a high-converting landing page. My e-commerce UI work has led to conversion rate improvements of 15–30% on average.",
+            bidNote: "$800 fixed",
+            timeline: "Mar 20, 2026",
+            response:
+              "Thank you for your proposal. We went with another freelancer for this project.",
+          },
+          {
+            id: 5,
+            title: "Blockchain Dashboard – Crypto Analytics",
+            client: "CryptoBase",
+            bid: "$6,500",
+            date: "Mar 1, 2026",
+            status: "pending",
+            coverLetter:
+              "I've built several DeFi dashboards integrating Web3.js and real-time on-chain data. My recent project for a DEX aggregator handled live price feeds and portfolio tracking across 12 chains.",
+            bidNote: "$6,500 fixed",
+            timeline: "May 10, 2026",
+            response: null,
+          },
+        ],
+        active: [
+          {
+            id: 6,
+            title: "Full-Stack Node.js & PostgreSQL API",
+            client: "DataSync Co.",
+            bid: "$85/hr",
+            date: "Mar 10, 2026",
+            status: "active",
+            coverLetter:
+              "Contract is now active. Working on milestone 1: API architecture & schema design.",
+            bidNote: "$85/hr",
+            timeline: "May 1, 2026",
+            response: "Milestone 1 accepted — great work!",
+          },
+          {
+            id: 7,
+            title: "React Native App – BuildFast Ltd.",
+            client: "BuildFast Ltd.",
+            bid: "$3,800",
+            date: "Feb 28, 2026",
+            status: "active",
+            coverLetter:
+              "Currently delivering milestone 2: core screens and navigation. On track for delivery.",
+            bidNote: "$3,800 fixed",
+            timeline: "Apr 30, 2026",
+            response: "Milestone 2 under review. Looking good!",
+          },
+        ],
+        archived: [
+          {
+            id: 8,
+            title: "Vue.js Dashboard for Fintech Startup",
+            client: "FinEdge",
+            bid: "$3,200",
+            date: "Jan 20, 2026",
+            status: "archived",
+            coverLetter:
+              "Submitted a detailed proposal for a Vue 3 + Pinia dashboard. Project was completed and archived.",
+            bidNote: "$3,200 fixed",
+            timeline: "Feb 28, 2026",
+            response: "Project completed successfully. Great work!",
+          },
+          {
+            id: 9,
+            title: "Python ML Pipeline",
+            client: "DataHive",
+            bid: "$120/hr",
+            date: "Jan 10, 2026",
+            status: "archived",
+            coverLetter:
+              "Proposed a scikit-learn + FastAPI ML serving pipeline. Proposal not selected.",
+            bidNote: "$120/hr",
+            timeline: "Feb 15, 2026",
+            response: null,
+          },
+          {
+            id: 10,
+            title: "WordPress Performance Optimization",
+            client: "BlogCo",
+            bid: "$400",
+            date: "Dec 22, 2025",
+            status: "archived",
+            coverLetter:
+              "Offered Core Web Vitals optimization package. Project cancelled by client.",
+            bidNote: "$400 fixed",
+            timeline: "Jan 10, 2026",
+            response: "Project was cancelled. Thank you for your interest.",
+          },
+          {
+            id: 11,
+            title: "React E-Learning Platform",
+            client: "EduTech Inc.",
+            bid: "$7,000",
+            date: "Dec 15, 2025",
+            status: "archived",
+            coverLetter:
+              "Full-featured LMS proposal with video streaming and quiz engine.",
+            bidNote: "$7,000 fixed",
+            timeline: "Feb 20, 2026",
+            response: null,
+          },
+          {
+            id: 12,
+            title: "Shopify Custom Theme",
+            client: "RetailBrand",
+            bid: "$1,800",
+            date: "Dec 8, 2025",
+            status: "archived",
+            coverLetter: "Custom Liquid theme with Figma handoff.",
+            bidNote: "$1,800 fixed",
+            timeline: "Jan 25, 2026",
+            response: null,
+          },
+          {
+            id: 13,
+            title: "DevOps — CI/CD Pipeline Setup",
+            client: "CodeForge",
+            bid: "$2,500",
+            date: "Nov 30, 2025",
+            status: "archived",
+            coverLetter: "GitHub Actions + Docker + AWS ECS pipeline proposal.",
+            bidNote: "$2,500 fixed",
+            timeline: "Jan 5, 2026",
+            response: "Went with an internal hire.",
+          },
+          {
+            id: 14,
+            title: "GraphQL API Migration",
+            client: "TechNova",
+            bid: "$55/hr",
+            date: "Nov 20, 2025",
+            status: "archived",
+            coverLetter: "REST-to-GraphQL migration with schema stitching.",
+            bidNote: "$55/hr",
+            timeline: "Dec 31, 2025",
+            response: null,
+          },
+          {
+            id: 15,
+            title: "iOS Swift App — Fitness Tracker",
+            client: "FitLife",
+            bid: "$5,500",
+            date: "Nov 10, 2025",
+            status: "archived",
+            coverLetter:
+              "Native iOS app with HealthKit integration and custom UI.",
+            bidNote: "$5,500 fixed",
+            timeline: "Jan 15, 2026",
+            response: "Proposal archived.",
+          },
+        ],
+      };
+
+      let currentTab = "submitted";
+      let expandedId = null;
+
+      /* ── Render table ─────────────────────────────────────────── */
+      function renderTable(tabKey) {
+        const rows = DATA[tabKey];
+        const tbody = document.getElementById("tableBody");
+        tbody.innerHTML = "";
+
+        if (!rows || rows.length === 0) {
+          tbody.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon"><i data-lucide="inbox"></i></div>
+          <div class="empty-title">No proposals here</div>
+          <div class="empty-sub">You don't have any ${tabKey} proposals yet. Start by browsing available jobs.</div>
+          <button class="btn-browse"><i data-lucide="search"></i> Browse Jobs</button>
+        </div>`;
+          lucide.createIcons();
+          return;
+        }
+
+        rows.forEach((row, idx) => {
+          // Row
+          const tr = document.createElement("div");
+          tr.className = "table-row";
+          tr.dataset.id = row.id;
+          tr.style.animationDelay = `${0.05 + idx * 0.05}s`;
+
+          const badgeClass =
+            {
+              pending: "badge-pending",
+              active: "badge-active",
+              declined: "badge-declined",
+              archived: "badge-archived",
+            }[row.status] || "badge-archived";
+
+          const statusLabel =
+            row.status.charAt(0).toUpperCase() + row.status.slice(1);
+
+          tr.innerHTML = `
+        <div class="td job-title-cell">
+          <i data-lucide="chevron-down" class="expand-chevron"></i>
+          ${row.title}
+        </div>
+        <div class="td client-cell">${row.client}</div>
+        <div class="td bid-cell">${row.bid}</div>
+        <div class="td date-cell">${row.date}</div>
+        <div class="td">
+          <span class="status-badge ${badgeClass}">
+            <span class="status-dot"></span>${statusLabel}
+          </span>
+        </div>
+      `;
+          tr.addEventListener("click", () => toggleRow(row.id));
+
+          // Detail panel
+          const dp = document.createElement("div");
+          dp.className = "detail-panel";
+          dp.dataset.detailFor = row.id;
+
+          const responseHtml = row.response
+            ? `<div class="client-response has-response"><strong style="color:var(--primary-light);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;">Client Response</strong><br>${row.response}</div>`
+            : `<div class="client-response"><em>No client response yet.</em></div>`;
+
+          dp.innerHTML = `
+        <div class="detail-inner">
+          <div>
+            <div class="detail-section-title">Cover Letter</div>
+            <div class="cover-letter-preview">${row.coverLetter}</div>
+            ${responseHtml}
+          </div>
+          <div class="detail-meta">
+            <div class="detail-section-title">Proposal Details</div>
+            <div class="detail-meta-row">
+              <span class="meta-label">Bid</span>
+              <span class="meta-value accent">${row.bidNote}</span>
+            </div>
+            <div class="detail-meta-row">
+              <span class="meta-label">Proposed Delivery</span>
+              <span class="meta-value">${row.timeline}</span>
+            </div>
+            <div class="detail-meta-row">
+              <span class="meta-label">Client</span>
+              <span class="meta-value">${row.client}</span>
+            </div>
+            <div class="detail-meta-row">
+              <span class="meta-label">Submitted</span>
+              <span class="meta-value">${row.date}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+          tbody.appendChild(tr);
+          tbody.appendChild(dp);
+        });
+
+        lucide.createIcons();
+      }
+
+      /* ── Toggle row expand ────────────────────────────────────── */
+      function toggleRow(id) {
+        const panel = document.querySelector(
+          `.detail-panel[data-detail-for="${id}"]`,
+        );
+        const row = document.querySelector(`.table-row[data-id="${id}"]`);
+
+        if (expandedId === id) {
+          // Close
+          panel.classList.remove("open");
+          row.classList.remove("expanded");
+          expandedId = null;
+        } else {
+          // Close any open
+          if (expandedId !== null) {
+            const prevPanel = document.querySelector(
+              `.detail-panel[data-detail-for="${expandedId}"]`,
+            );
+            const prevRow = document.querySelector(
+              `.table-row[data-id="${expandedId}"]`,
+            );
+            if (prevPanel) prevPanel.classList.remove("open");
+            if (prevRow) prevRow.classList.remove("expanded");
+          }
+          panel.classList.add("open");
+          row.classList.add("expanded");
+          expandedId = id;
+        }
+      }
+
+      /* ── Switch tab ───────────────────────────────────────────── */
+      function switchTab(tabKey, btn) {
+        currentTab = tabKey;
+        expandedId = null;
+
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        renderTable(tabKey);
+      }
+
+      // Initial render
+      renderTable("submitted");
+    </script>
+  </body>
+</html>

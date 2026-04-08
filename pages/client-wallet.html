@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify — Client Financial Overview</title>
+    <meta
+      name="description"
+      content="View your balance, deposits, withdrawals, and pending payments on Workify."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/utilities.css" />
+    <link rel="stylesheet" href="../css/collaboration.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <div
+      id="sidebar-placeholder"
+      data-component="components/sidebar-client.html"
+    ></div>
+
+    <!-- MAIN -->
+    <div class="page-wrapper">
+      <header class="topbar">
+        <span class="topbar-title">Wallet &amp; Transactions</span>
+        <div class="topbar-actions">
+          <div class="role-badge">Client</div>
+          <button
+            class="btn btn-ghost btn-sm"
+            type="button"
+            onclick="alert('Demo only')"
+          >
+            <i data-lucide="download" style="width: 16px; height: 16px"></i>
+            Statement
+          </button>
+          <div
+            class="avatar"
+            style="
+              width: 36px;
+              height: 36px;
+              font-size: 13px;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: var(--bg-elevated);
+              border-radius: 50%;
+            "
+          >
+            JD
+          </div>
+        </div>
+      </header>
+
+      <main class="content collab-content">
+        <!-- KPI Strip -->
+        <div class="collab-kpi-row collab-kpi-row--top">
+          <div class="collab-kpi collab-kpi--card">
+            <div class="collab-kpi-label">Available Balance</div>
+            <div class="collab-kpi-value">$1,860.00</div>
+            <div class="collab-kpi-sub">Ready to withdraw</div>
+          </div>
+          <div class="collab-kpi collab-kpi--card">
+            <div class="collab-kpi-label">Pending Payments</div>
+            <div class="collab-kpi-value" style="color: #ffe7a4">$420.00</div>
+            <div class="collab-kpi-sub">In review / dispute window</div>
+          </div>
+          <div class="collab-kpi collab-kpi--card collab-kpi--earnings">
+            <div class="collab-kpi-label">Total Earnings</div>
+            <div class="collab-kpi-value">$2,280.00</div>
+            <div class="collab-kpi-sub">Protected by escrow</div>
+          </div>
+        </div>
+
+        <!-- Main grid -->
+        <div class="grid" style="align-items: start">
+          <!-- Actions card -->
+          <div class="col-4">
+            <div class="collab-card">
+              <div class="collab-card-header">
+                <div class="collab-card-title">
+                  <i
+                    data-lucide="activity"
+                    style="width: 20px; height: 20px"
+                  ></i>
+                  <h2>Actions</h2>
+                </div>
+              </div>
+              <div class="collab-card-body">
+                <hr class="collab-divider" style="margin-top: 0" />
+                <div style="display: flex; flex-direction: column; gap: 12px">
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    onclick="alert('Demo only')"
+                  >
+                    <i
+                      data-lucide="plus-circle"
+                      style="width: 16px; height: 16px"
+                    ></i>
+                    Add Funds
+                  </button>
+                  <button
+                    class="btn btn-ghost"
+                    type="button"
+                    onclick="alert('Demo only')"
+                  >
+                    <i
+                      data-lucide="arrow-down-circle"
+                      style="width: 16px; height: 16px"
+                    ></i>
+                    Request Withdrawal
+                  </button>
+                  <button
+                    class="btn btn-danger"
+                    type="button"
+                    onclick="location.href = 'client-disputes.html'"
+                  >
+                    <i data-lucide="flag" style="width: 16px; height: 16px"></i>
+                    Open Dispute Center
+                  </button>
+                </div>
+                <hr class="collab-divider" />
+                <div>
+                  <div class="input-label" style="margin-bottom: 10px">
+                    Ledger Notes
+                  </div>
+                  <div
+                    style="
+                      color: var(--text-muted);
+                      line-height: 1.6;
+                      font-size: 13px;
+                    "
+                  >
+                    Deposits appear as soon as escrow is funded. Pending
+                    payments move to released once milestones are confirmed.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transaction History -->
+          <div class="col-8">
+            <div class="collab-card collab-card-elevated">
+              <div class="collab-card-header">
+                <div class="collab-card-title">
+                  <i data-lucide="list" style="width: 20px; height: 20px"></i>
+                  <h2>Transaction History</h2>
+                </div>
+                <span class="badge"
+                  ><span class="collab-dot"></span> Latest 30</span
+                >
+              </div>
+              <div class="collab-card-body">
+                <div
+                  class="tab-bar collab-tabs"
+                  data-tabs
+                  style="margin-bottom: 16px"
+                >
+                  <button
+                    class="tab-item active"
+                    aria-selected="true"
+                    data-tab="true"
+                    data-filter="all"
+                  >
+                    All
+                  </button>
+                  <button
+                    class="tab-item"
+                    aria-selected="false"
+                    data-tab="true"
+                    data-filter="deposit"
+                  >
+                    Deposits
+                  </button>
+                  <button
+                    class="tab-item"
+                    aria-selected="false"
+                    data-tab="true"
+                    data-filter="withdrawal"
+                  >
+                    Withdrawals
+                  </button>
+                  <button
+                    class="tab-item"
+                    aria-selected="false"
+                    data-tab="true"
+                    data-filter="pending"
+                  >
+                    Pending
+                  </button>
+                </div>
+                <div class="table-wrapper">
+                  <table class="data-table" aria-label="Transactions table">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>Reference</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th style="text-align: right">When</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr data-filter-item="deposit">
+                        <td>
+                          <span class="badge"
+                            ><span class="collab-dot"></span> Deposit</span
+                          >
+                        </td>
+                        <td
+                          style="
+                            font-family: var(--font-mono);
+                            color: var(--text-muted);
+                            font-size: 13px;
+                          "
+                        >
+                          escrow:CX-2041
+                        </td>
+                        <td>
+                          <span class="badge badge-success"
+                            ><span class="collab-dot"></span> Funded</span
+                          >
+                        </td>
+                        <td style="font-weight: 900">+$1,200.00</td>
+                        <td style="text-align: right; color: var(--text-muted)">
+                          2 days ago
+                        </td>
+                      </tr>
+                      <tr data-filter-item="pending">
+                        <td>
+                          <span class="badge"
+                            ><span class="collab-dot"></span> Milestone</span
+                          >
+                        </td>
+                        <td
+                          style="
+                            font-family: var(--font-mono);
+                            color: var(--text-muted);
+                            font-size: 13px;
+                          "
+                        >
+                          milestone:CX-2109#3
+                        </td>
+                        <td>
+                          <span class="badge badge-warning"
+                            ><span class="collab-dot"></span> Pending</span
+                          >
+                        </td>
+                        <td style="font-weight: 900; color: #ffe7a4">
+                          +$420.00
+                        </td>
+                        <td style="text-align: right; color: var(--text-muted)">
+                          1 day ago
+                        </td>
+                      </tr>
+                      <tr data-filter-item="withdrawal">
+                        <td>
+                          <span class="badge"
+                            ><span class="collab-dot"></span> Withdrawal</span
+                          >
+                        </td>
+                        <td
+                          style="
+                            font-family: var(--font-mono);
+                            color: var(--text-muted);
+                            font-size: 13px;
+                          "
+                        >
+                          payout:PX-8801
+                        </td>
+                        <td>
+                          <span class="badge badge-success"
+                            ><span class="collab-dot"></span> Released</span
+                          >
+                        </td>
+                        <td style="font-weight: 900">-$340.00</td>
+                        <td style="text-align: right; color: var(--text-muted)">
+                          3 days ago
+                        </td>
+                      </tr>
+                      <tr data-filter-item="deposit">
+                        <td>
+                          <span class="badge"
+                            ><span class="collab-dot"></span> Deposit</span
+                          >
+                        </td>
+                        <td
+                          style="
+                            font-family: var(--font-mono);
+                            color: var(--text-muted);
+                            font-size: 13px;
+                          "
+                        >
+                          escrow:CX-1912
+                        </td>
+                        <td>
+                          <span class="badge badge-success"
+                            ><span class="collab-dot"></span> Funded</span
+                          >
+                        </td>
+                        <td style="font-weight: 900">+$980.00</td>
+                        <td style="text-align: right; color: var(--text-muted)">
+                          6 days ago
+                        </td>
+                      </tr>
+                      <tr data-filter-item="pending">
+                        <td>
+                          <span class="badge"
+                            ><span class="collab-dot"></span> Milestone</span
+                          >
+                        </td>
+                        <td
+                          style="
+                            font-family: var(--font-mono);
+                            color: var(--text-muted);
+                            font-size: 13px;
+                          "
+                        >
+                          milestone:CX-2041#4
+                        </td>
+                        <td>
+                          <span class="badge badge-warning"
+                            ><span class="collab-dot"></span> Pending</span
+                          >
+                        </td>
+                        <td style="font-weight: 900; color: #ffe7a4">
+                          +$240.00
+                        </td>
+                        <td style="text-align: right; color: var(--text-muted)">
+                          Today
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div
+                  style="
+                    margin-top: 16px;
+                    color: var(--text-muted);
+                    font-size: 13px;
+                    line-height: 1.6;
+                  "
+                >
+                  UI prototype — in production, transactions come from a
+                  server-verified backend ledger.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/shared.js"></script>
+    <script src="../js/collaboration.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

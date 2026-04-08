@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Workify - Authentication</title>
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+    <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  </head>
+  <body>
+    <div class="onboarding-shell">
+      <aside class="auth-art">
+        <div class="brand-block">
+          <a href="../index.html" class="brand-logo">Workify</a>
+          <h1>Make hiring and freelancing feel effortless.</h1>
+          <p>
+            One workspace for proposals, contracts, chat, and escrow-backed
+            payments.
+          </p>
+        </div>
+        <div class="testimonial-float" aria-hidden="true">
+          <p>
+            "The onboarding made me operational in minutes. I got my first
+            project before lunch."
+          </p>
+          <span>Amira K. - Product Designer</span>
+        </div>
+      </aside>
+
+      <main class="workflow-panel">
+        <section id="auth-section" class="onboarding-section active">
+          <p class="eyebrow">Authentication</p>
+          <h2 class="hero-heading">Welcome Back</h2>
+          <p class="lead-text">Log in or create your account to continue.</p>
+
+          <div class="auth-navigation" role="tablist">
+            <button
+              id="login-tab"
+              class="auth-tab active"
+              role="tab"
+              aria-selected="true"
+              type="button"
+            >
+              Login
+            </button>
+            <button
+              id="register-tab"
+              class="auth-tab"
+              role="tab"
+              aria-selected="false"
+              type="button"
+            >
+              Register
+            </button>
+          </div>
+
+          <form id="login-form" class="auth-form active">
+            <div class="form-field">
+              <label for="login-email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="login-email"
+                class="form-input"
+                required
+              />
+            </div>
+            <div class="form-field">
+              <label for="login-password" class="form-label">Password</label>
+              <input
+                type="password"
+                id="login-password"
+                class="form-input"
+                required
+              />
+            </div>
+            <button type="submit" class="primary-button full">Continue</button>
+          </form>
+
+          <form id="register-form" class="auth-form">
+            <div class="form-field">
+              <label for="register-name" class="form-label">Full Name</label>
+              <input
+                type="text"
+                id="register-name"
+                class="form-input"
+                required
+              />
+            </div>
+            <div class="form-field">
+              <label for="register-email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="register-email"
+                class="form-input"
+                required
+              />
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="register-password" class="form-label"
+                  >Password</label
+                >
+                <input
+                  type="password"
+                  id="register-password"
+                  class="form-input"
+                  minlength="8"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <label for="register-confirm-password" class="form-label"
+                  >Confirm</label
+                >
+                <input
+                  type="password"
+                  id="register-confirm-password"
+                  class="form-input"
+                  minlength="8"
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit" class="primary-button full">
+              Create Account
+            </button>
+          </form>
+
+          <div class="divider"><span>or continue with</span></div>
+          <div class="oauth-row">
+            <button class="secondary-button oauth-btn" type="button">
+              <i data-lucide="circle"></i> Google
+            </button>
+            <button class="secondary-button oauth-btn" type="button">
+              <i data-lucide="github"></i> GitHub
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/login.js"></script>
+    <script>
+      // Force init icons if script loaded late
+      if (typeof lucide !== "undefined") lucide.createIcons();
+    </script>
+  </body>
+</html>
