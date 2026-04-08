@@ -1,19 +1,6 @@
 {
   "buildCommand": "echo 'Static site - no build needed'",
-  "framework": "static",
   "public": true,
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "/:path*"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/index.html",
-      "destination": "/"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
